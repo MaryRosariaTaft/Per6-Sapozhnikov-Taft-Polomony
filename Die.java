@@ -7,7 +7,7 @@ pubilc class Die{
 
     }
 
-    public int roll(){
+    public static int roll(){
 	Random r=new Random();
 	return r.nextInt(6)+1;
     }
