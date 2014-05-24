@@ -1,14 +1,18 @@
+import java.io.*;
+import java.util.*;
+
 class Square{
+  
     private String name;
     private int cost;
-    int x,y,w,h;
-    color c;
+    private int x,y,w,h;
+    private color c;
 
-    public Square(){
+    Square(){
       
     }
     
-    public Square(int x, int y, int w, int h){
+    Square(int x, int y, int w, int h){
       this.x=x;
       this.y=y;
       this.w=w;
@@ -16,7 +20,7 @@ class Square{
       c=color(#ff0000);
     }
 
-    public int rent(){
+    int rent(){
       return 100;
     }
     
