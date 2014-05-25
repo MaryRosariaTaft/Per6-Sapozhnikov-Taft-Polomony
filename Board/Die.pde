@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.*;
-
 static class Die{
 
     Die(){
