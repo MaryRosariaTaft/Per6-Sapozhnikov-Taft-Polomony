@@ -17,7 +17,8 @@ class Square{
       this.y=y;
       this.w=w;
       this.h=h;
-      c=color(#ff0000);
+      //oh, dear, the random colors look terrible
+      c=color(random(255),random(255),random(255));
     }
 
     int rent(){
