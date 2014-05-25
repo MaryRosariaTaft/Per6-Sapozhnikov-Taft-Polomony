@@ -4,7 +4,7 @@ import java.util.*;
 class Person{
 
     private String name;
-    //Square square;
+    //private Square square;
     private LL<Square> squares;
     private int money;
     private boolean inJail;
@@ -12,14 +12,12 @@ class Person{
     Person(String name, LL<Square> squares){
 	this.squares=squares;
 	this.name=name;
-	//square=???temp;//Go
 	money=1500;
 	inJail=false;
     }
 
     void move(){
 	squares.forward();
-
     }
 
     void jailHouseRock(){
