@@ -28,33 +28,10 @@ class LL<E>{
     }
 
     private Node<E> current;
+    private int length=0;
 
-    void insertBefore(E d){
-	Node<E> n=new Node<E>(d);
-	if(current==null)
-	    current=n;
-	else{
-	    n.setPrev(current.getPrev());
-	    current.getPrev().setNext(n);
-	    n.setNext(current);
-	    current.setPrev(n);
-	    current=n;
-	}
-    }
-
-    void insertBefore(Node<E> n){
-	if(current==null)
-	    current=n;
-	else{
-	    n.setPrev(current.getPrev());
-	    current.getPrev().setNext(n);
-	    n.setNext(current);
-	    current.setPrev(n);
-	    current=n;
-	}
-    }
-
-    void insertAfter(E d){
+    //initializes LL if LL is empty, or adds parameter Node after current Node
+    void add(E d){
 	Node<E> n=new Node<E>(d);
 	if(current==null)
 	    current=n;
@@ -65,18 +42,55 @@ class LL<E>{
 	    current.setNext(n);
 	    current=n;
 	}
+        length++;
     }
-
-    void insertAfter(Node<E> n){
-	if(current==null)
-	    current=n;
-	else{
-	    n.setNext(current.getNext());
-	    current.getNext().setPrev(n);
-	    n.setPrev(current);
-	    current.setNext(n);
-	    current=n;
-	}
+    
+    //extra functionality
+    void addBefore(E d){
+      Node<E> n=new Node<E>(d);
+      if(current==null)
+          current=n;
+      else{
+          n.setPrev(current.getPrev());
+          current.getPrev().setNext(n);
+          n.setNext(current);
+          current.setPrev(n);
+          current=n;
+      }
+    }
+    
+    //removes current Node
+    //null if removing last Node
+    //new current is current.getNext() otherwise
+    E remove(){
+      if(current==null)
+          return null;
+      E data=current.getData(); //or getCurrent();
+      if(length==1)
+          current=null;
+      else{
+          current.getNext().setPrev(current.getPrev());
+          current.getPrev().setNext(current.getNext());
+          current=current.getNext();
+      }
+      length--;
+      return data;
+    }
+    
+    //extra functionality
+    E removeAndMoveBack(){
+      if(current==null)
+          return null;
+      E data=current.getData(); //or getCurrent();
+      if(length==1)
+          current=null;
+      else{
+          current.getNext().setPrev(current.getPrev());
+          current.getPrev().setNext(current.getNext());
+          current=current.getPrev();
+      }
+      length--;
+      return data;
     }
 
     void forward(){
@@ -85,6 +99,10 @@ class LL<E>{
 
     void back(){
 	current=current.getPrev();
+    }
+    
+    int getLength(){
+       return length; 
     }
 
     E getCurrent(){
