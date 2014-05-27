@@ -12,13 +12,14 @@ class Square{
       
     }
     
-    Square(int x, int y, int w, int h){
+    Square(int x, int y, int w, int h, color c){
       this.x=x;
       this.y=y;
       this.w=w;
       this.h=h;
       //oh, dear, the random colors look terrible
-      c=color(random(255),random(255),random(255));
+      //c=color(random(255),random(255),random(255));
+      this.c=c;
     }
 
     int rent(){
@@ -28,5 +29,9 @@ class Square{
     void draw(){
       fill(c);
       rect(x,y,w,h);
+    }
+
+    color getColor(){
+      return c;
     }
 }

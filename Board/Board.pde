@@ -8,17 +8,20 @@ void setup(){
   //also have to put text on each Square (the name of that Square/property)
   //and maybe we should find a better way to choose colors than randomizing it like I did...
   //after the other stuff works, at least
+  color brown = new color(#8B4513);
+  color c
   for(int i=0;i<9;i++){
-     squares.add(new Square(i*50,0,50,50));
+     if(c
+     squares.add(new Square(i*50,0,50,50,c));
   }
   for(int i=0;i<9;i++){
-     squares.add(new Square(450,i*50,50,50)); 
+     squares.add(new Square(450,i*50,50,50,c)); 
   }
   for(int i=9;i>0;i--){
-     squares.add(new Square(i*50,450,50,50));
+     squares.add(new Square(i*50,450,50,50,c));
   }
   for(int i=9;i>0;i--){
-     squares.add(new Square(0,i*50,50,50));
+     squares.add(new Square(0,i*50,50,50,c));
   }
   //set current at starting point again
   squares.forward();
