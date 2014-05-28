@@ -12,13 +12,14 @@ class Square{
       
     }
     
-    Square(int x, int y, int w, int h, color c, String name){
+    Square(int x, int y, int w, int h, color c, String name, int cost){
       this.x=x;
       this.y=y;
       this.w=w;
       this.h=h;
       this.c=c;
       this.name=name;
+      this.cost=cost;
     }
 
     int rent(){

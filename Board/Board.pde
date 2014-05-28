@@ -11,14 +11,15 @@ class myColor{
 
 void setup(){
   
+  //big thanks to http://en.wikipedia.org/wiki/Template:Monopoly_board_layout
+  
   size(550,550);
   
   //init LL of Squares
   LL<Square> squares=new LL<Square>();
   
-  //also have to put text on each Square (the name of that Square/property)
-  
   //prepare colors to be assigned to Squares
+  
   myColor other = new myColor(#FFFFFF);
   myColor rr = new myColor(#000000);
   myColor brown = new myColor(#8B4513);
@@ -73,6 +74,7 @@ void setup(){
   colors.add(blue);
   colors.forward();
   
+  
   //prepare names
   
   LL<String> names = new LL<String>();
@@ -119,58 +121,117 @@ void setup(){
   names.add("Boardwalk");
   names.forward();
   
+  
+  //prepare costs
+  
+  LL<Integer> costs = new LL<Integer>();
+  
+  costs.add(0);
+  costs.add(60);
+  costs.add(0);
+  costs.add(60);
+  costs.add(200);
+  costs.add(200);
+  costs.add(100);
+  costs.add(0);
+  costs.add(100);
+  costs.add(120);
+  costs.add(0);
+  costs.add(140);
+  costs.add(150);
+  costs.add(140);
+  costs.add(160);
+  costs.add(200);
+  costs.add(180);
+  costs.add(0);
+  costs.add(180);
+  costs.add(200);
+  costs.add(0);
+  costs.add(220);
+  costs.add(0);
+  costs.add(220);
+  costs.add(240);
+  costs.add(200);
+  costs.add(260);
+  costs.add(260);
+  costs.add(150);
+  costs.add(280);
+  costs.add(0);
+  costs.add(300);
+  costs.add(300);
+  costs.add(0);
+  costs.add(320);
+  costs.add(200);
+  costs.add(0);
+  costs.add(350);
+  costs.add(100);
+  costs.add(400); 
+  costs.forward(); 
+  
+  
   color c;
   String n;
+  int cst;
   
+  //draw board
   for(int i=10;i>0;i--){
      c = colors.getCurrent().getColor();
      colors.forward();
      n = names.getCurrent();
      names.forward();
-     squares.add(new Square(i*50,500,50,50,c,n));
+     cst = (int)(costs.getCurrent());
+     costs.forward();
+     squares.add(new Square(i*50,500,50,50,c,n,cst));
   }
   for(int i=10;i>0;i--){
      c = colors.getCurrent().getColor();
      colors.forward();
      n = names.getCurrent();
      names.forward();
-     squares.add(new Square(0,i*50,50,50,c,n));
+     cst = (int)(costs.getCurrent());
+     costs.forward();
+     squares.add(new Square(0,i*50,50,50,c,n,cst));
   }
   for(int i=0;i<10;i++){
      c = colors.getCurrent().getColor();
      colors.forward();
      n = names.getCurrent();
      names.forward();
-     squares.add(new Square(i*50,0,50,50,c,n));
+     cst = (int)(costs.getCurrent());
+     costs.forward();
+     squares.add(new Square(i*50,0,50,50,c,n,cst));
   }
   for(int i=0;i<10;i++){
      c = colors.getCurrent().getColor();
      colors.forward();
      n = names.getCurrent();
      names.forward();
-     squares.add(new Square(500,i*50,50,50,c,n)); 
+     cst = (int)(costs.getCurrent());
+     costs.forward();
+     squares.add(new Square(500,i*50,50,50,c,n,cst)); 
   }
 
   //set current at starting point again
   squares.forward();
   
-  // squares test
-  //  while(squares.getLength()>38)
-  //    squares.removeAndMoveBack();
-  // yay, it worked
+        // squares test
+        //  while(squares.getLength()>38)
+        //    squares.removeAndMoveBack();
+        // yay, it worked
+        
+        // text test
+        //  PFont f=createFont("Arial",16,true);
+        //  textFont(f,22);
+        //  fill(255);
+        //  text(squares.getCurrent().getName(),300,300);
+        // this worked, too
   
-  // draw border
+  // draw board
   for(int i=0;i<squares.getLength();i++){
     squares.getCurrent().draw();
     squares.forward();
   }
   
-  // text test
-  //  PFont f=createFont("Arial",16,true);
-  //  textFont(f,22);
-  //  fill(255);
-  //  text(squares.getCurrent().getName(),300,300);
-  // this worked, too
   
   //init 2 LLs of Cards, print rectangles with access to top cards
   LL<Card> deck1=new LL<Card>();
