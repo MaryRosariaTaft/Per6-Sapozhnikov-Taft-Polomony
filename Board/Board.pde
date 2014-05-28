@@ -1,6 +1,17 @@
+//workaround for LL of colors
+class myColor{
+  private color c;
+  public myColor(color c){
+    this.c=c;
+  }
+  public color getColor(){
+    return c;
+  }
+}
+
 void setup(){
   
-  size(500,500);
+  size(550,550);
   
   //init LL of Squares
   LL<Square> squares=new LL<Square>();
@@ -8,21 +19,89 @@ void setup(){
   //also have to put text on each Square (the name of that Square/property)
   //and maybe we should find a better way to choose colors than randomizing it like I did...
   //after the other stuff works, at least
-  color brown = new color(#8B4513);
-  color c
-  for(int i=0;i<9;i++){
-     if(c
-     squares.add(new Square(i*50,0,50,50,c));
+  myColor other = new myColor(#FFFFFF);
+  myColor rr = new myColor(#000000);
+  myColor brown = new myColor(#8B4513);
+  myColor cyan = new myColor(#00FFFF);
+  myColor magenta = new myColor(#FF00FF);
+  myColor orange = new myColor(#FFA500);
+  myColor red = new myColor(#FF0000);
+  myColor gold = new myColor(#FFD700);
+  myColor green = new myColor(#008000);
+  myColor blue = new myColor(#0000FF);
+  LL<myColor> colors = new LL<myColor>();
+  colors.add(other);
+  colors.add(brown);
+  colors.add(other);
+  colors.add(brown);
+  colors.add(other);
+  colors.add(rr);
+  colors.add(cyan);
+  colors.add(other);
+  colors.add(cyan);
+  colors.add(cyan);
+  colors.add(other);
+  colors.add(magenta);
+  colors.add(other);
+  colors.add(magenta);
+  colors.add(magenta);
+  colors.add(rr);
+  colors.add(orange);
+  colors.add(other);
+  colors.add(orange);
+  colors.add(orange);
+  colors.add(other);
+  colors.add(red);
+  colors.add(other);
+  colors.add(red);
+  colors.add(red);
+  colors.add(rr);
+  colors.add(gold);
+  colors.add(gold);
+  colors.add(other);
+  colors.add(gold);
+  colors.add(other);
+  colors.add(green);
+  colors.add(green);
+  colors.add(other);
+  colors.add(green);
+  colors.add(rr);
+  colors.add(blue);
+  colors.add(other);
+  colors.add(blue);
+  colors.forward();
+  
+  color c;
+  for(int i=10;i>0;i--){
+     c = colors.getCurrent().getColor();
+     colors.forward();
+     squares.add(new Square(i*50,500,50,50,c));
   }
-  for(int i=0;i<9;i++){
-     squares.add(new Square(450,i*50,50,50,c)); 
-  }
-  for(int i=9;i>0;i--){
-     squares.add(new Square(i*50,450,50,50,c));
-  }
-  for(int i=9;i>0;i--){
+  for(int i=10;i>0;i--){
+     c = colors.getCurrent().getColor();
+     colors.forward();
      squares.add(new Square(0,i*50,50,50,c));
   }
+  for(int i=0;i<10;i++){
+     c = colors.getCurrent().getColor();
+     colors.forward();
+     squares.add(new Square(i*50,0,50,50,c));
+  }
+  for(int i=0;i<10;i++){
+     c = colors.getCurrent().getColor();
+     colors.forward();
+     squares.add(new Square(500,i*50,50,50,c)); 
+  }
+//  for(int i=10;i>0;i--){
+//     c = colors.getCurrent().getColor();
+//     colors.forward();
+//     squares.add(new Square(i*50,500,50,50,c));
+//  }
+//  for(int i=10;i>0;i--){
+//     c = colors.getCurrent().getColor();
+//     colors.forward();
+//     squares.add(new Square(0,i*50,50,50,c));
+//  }
   //set current at starting point again
   squares.forward();
   
