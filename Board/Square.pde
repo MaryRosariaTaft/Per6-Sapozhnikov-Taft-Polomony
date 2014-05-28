@@ -12,14 +12,13 @@ class Square{
       
     }
     
-    Square(int x, int y, int w, int h, color c){
+    Square(int x, int y, int w, int h, color c, String name){
       this.x=x;
       this.y=y;
       this.w=w;
       this.h=h;
-      //oh, dear, the random colors look terrible
-      //c=color(random(255),random(255),random(255));
       this.c=c;
+      this.name=name;
     }
 
     int rent(){
@@ -33,5 +32,9 @@ class Square{
 
     color getColor(){
       return c;
+    }
+    
+    String getName(){
+     return name; 
     }
 }

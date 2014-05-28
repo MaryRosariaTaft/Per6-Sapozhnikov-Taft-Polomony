@@ -17,8 +17,8 @@ void setup(){
   LL<Square> squares=new LL<Square>();
   
   //also have to put text on each Square (the name of that Square/property)
-  //and maybe we should find a better way to choose colors than randomizing it like I did...
-  //after the other stuff works, at least
+  
+  //prepare colors to be assigned to Squares
   myColor other = new myColor(#FFFFFF);
   myColor rr = new myColor(#000000);
   myColor brown = new myColor(#8B4513);
@@ -29,7 +29,9 @@ void setup(){
   myColor gold = new myColor(#FFD700);
   myColor green = new myColor(#008000);
   myColor blue = new myColor(#0000FF);
+  
   LL<myColor> colors = new LL<myColor>();
+  
   colors.add(other);
   colors.add(brown);
   colors.add(other);
@@ -71,44 +73,90 @@ void setup(){
   colors.add(blue);
   colors.forward();
   
+  //prepare names
+  
+  LL<String> names = new LL<String>();
+  
+  names.add("GO");
+  names.add("Mediterranean Avenue");
+  names.add("Community Chest");
+  names.add("Baltic Avenue");
+  names.add("Income Tax");
+  names.add("Reading Railroad");
+  names.add("Oriental Avenue");
+  names.add("Chance");
+  names.add("Vermont Avenue");
+  names.add("Connecticut Avenue");
+  names.add("IN JAIL");
+  names.add("St. Charles Place");
+  names.add("Electric Company");
+  names.add("Staties Avenue");
+  names.add("Virginia Avenue");
+  names.add("Pennsylvania Railroad");
+  names.add("St. James Place");
+  names.add("Community Chest");
+  names.add("Tennessee Avenue");
+  names.add("New York Avenue");
+  names.add("FREE PARKING");
+  names.add("Kentucky Avenue");
+  names.add("Chance");
+  names.add("Indiana Avenue");
+  names.add("Illinois Avenue");
+  names.add("B&O Railroad");
+  names.add("Atlantic Avnue");
+  names.add("Ventnor Avenue");
+  names.add("Water Works");
+  names.add("Marvin Gardens");
+  names.add("GO TO JAIL");
+  names.add("Pacific Avenue");
+  names.add("North Carolina Avenue");
+  names.add("Community Chest");
+  names.add("Pennsylvania Avenue");
+  names.add("Short Line");
+  names.add("Chance");
+  names.add("Park Place");
+  names.add("Luxury Tax");
+  names.add("Boardwalk");
+  names.forward();
+  
   color c;
+  String n;
+  
   for(int i=10;i>0;i--){
      c = colors.getCurrent().getColor();
      colors.forward();
-     squares.add(new Square(i*50,500,50,50,c));
+     n = names.getCurrent();
+     names.forward();
+     squares.add(new Square(i*50,500,50,50,c,n));
   }
   for(int i=10;i>0;i--){
      c = colors.getCurrent().getColor();
      colors.forward();
-     squares.add(new Square(0,i*50,50,50,c));
+     n = names.getCurrent();
+     names.forward();
+     squares.add(new Square(0,i*50,50,50,c,n));
   }
   for(int i=0;i<10;i++){
      c = colors.getCurrent().getColor();
      colors.forward();
-     squares.add(new Square(i*50,0,50,50,c));
+     n = names.getCurrent();
+     names.forward();
+     squares.add(new Square(i*50,0,50,50,c,n));
   }
   for(int i=0;i<10;i++){
      c = colors.getCurrent().getColor();
      colors.forward();
-     squares.add(new Square(500,i*50,50,50,c)); 
+     n = names.getCurrent();
+     names.forward();
+     squares.add(new Square(500,i*50,50,50,c,n)); 
   }
-//  for(int i=10;i>0;i--){
-//     c = colors.getCurrent().getColor();
-//     colors.forward();
-//     squares.add(new Square(i*50,500,50,50,c));
-//  }
-//  for(int i=10;i>0;i--){
-//     c = colors.getCurrent().getColor();
-//     colors.forward();
-//     squares.add(new Square(0,i*50,50,50,c));
-//  }
+
   //set current at starting point again
   squares.forward();
   
-  // test
-  //while(squares.getLength()>1)
-  //  squares.removeAndMoveBack();
-  // squares.add(new Square (200,200,60,57));
+  // squares test
+  //  while(squares.getLength()>38)
+  //    squares.removeAndMoveBack();
   // yay, it worked
   
   // draw border
@@ -116,6 +164,13 @@ void setup(){
     squares.getCurrent().draw();
     squares.forward();
   }
+  
+  // text test
+  //  PFont f=createFont("Arial",16,true);
+  //  textFont(f,22);
+  //  fill(255);
+  //  text(squares.getCurrent().getName(),300,300);
+  // this worked, too
   
   //init 2 LLs of Cards, print rectangles with access to top cards
   LL<Card> deck1=new LL<Card>();
