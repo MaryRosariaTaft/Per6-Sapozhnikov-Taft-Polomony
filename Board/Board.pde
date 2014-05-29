@@ -234,9 +234,60 @@ void setup(){
   
   
   //init 2 LLs of Cards, print rectangles with access to top cards
-  LL<Card> deck1=new LL<Card>();
-  LL<Card> deck2=new LL<Card>();
   
+  //in case any of these is too painful to implement, I suppose we could do a variation on one or two
+  //also: to cover passing "GO" and collecting $200, we can have the players "move" with a while loop and, at each Square, check if the current Square is "GO"
+  //and if the player is being sent to jail, we'll set the instance var "inJail" (in the Person class) true *before* he moves
+  
+  //thanks to whoever answered this: https://answers.yahoo.com/question/index?qid=20110528154141AAFwRyu
+  //Community Chest: 
+  //
+  //Advance to Go (Collect $200) 
+  //Bank error in your favor – collect $75 
+  //Doctor's fees – Pay $50 
+  //Get out of jail free – this card may be kept until needed, or sold 
+  //Go to jail – go directly to jail – Do not pass Go, do not collect $200 
+  //It is your birthday Collect $10 from each player 
+  //Grand Opera Night – collect $50 from every player for opening night seats 
+  //Income Tax refund – collect $20 
+  //Life Insurance Matures – collect $100 
+  //Pay Hospital Fees of $100 
+  //Pay School Fees of $50 
+  //Receive $25 Consultancy Fee 
+  //You are assessed for street repairs – $40 per house, $115 per hotel 
+  //You have won second prize in a beauty contest– collect $10 
+  //You inherit $100 
+  //From sale of stock you get $50 
+  //Holiday Fund matures - Receive $100 
+  //
+  //Chance: 
+  //
+  //Advance to Go (Collect $200) 
+  //Advance to Illinois Ave. 
+  //Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown. 
+  //Advance token to the nearest Railroad and pay owner twice the rental to which he/she is otherwise entitled. If Railroad is unowned, you may buy it from the Bank. (There are two of these.) 
+  //Advance to St. Charles Place – if you pass Go, collect $200 
+  //Bank pays you dividend of $50 
+  //Get out of Jail free – this card may be kept until needed, or traded/sold 
+  //Go back 3 spaces 
+  //Go directly to Jail – do not pass Go, do not collect $200 
+  //Make general repairs on all your property – for each house pay $25 – for each hotel $100 
+  //Pay poor tax of $15 
+  //Take a trip to Reading Railroad – if you pass Go collect $200 
+  //Take a walk on the Boardwalk – advance token to Boardwalk 
+  //You have been elected chairman of the board – pay each player $50 
+  //Your building loan matures – collect $150 
+  //You have won a crossword competition - collect $100
+
+  LL<Card> Chance=new LL<Card>();
+  
+  //if a card calls for money to be collected or given away, we can use a negative value
+  Chance.add(new Card(0,"",0));
+  
+  LL<Card> CommunityChest=new LL<Card>();
+  
+  CommunityChest.add(new Card(1,"",0));
+
   //init [LL of] Persons
   //still testing
   //if every Person shares the same instance of squares
@@ -251,7 +302,7 @@ void setup(){
   //(I didn't edit that in the Person class [yet, in case you do disagree])
   
   LL<Person> players=new LL<Person>();
-  players.add(new Person("Bob",squares));
+  players.add(new Person("Player1",squares));
   
   //init&draw dice
   //P.S. can't put a draw() method in the Die class if it's static
