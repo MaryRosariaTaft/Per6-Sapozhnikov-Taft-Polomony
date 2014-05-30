@@ -109,6 +109,20 @@ class LL<E>{
 	if(current==null) return null;
 	return current.getData();
     }
+    
+  E find(String target){
+  if(current==null)
+      return null;
+  String s=current.toString()+" ";
+  Node<E> temp=current.getNext();
+  while(temp!=current){
+      if(target.equals(s)){
+        return temp.getData();
+      }
+      temp=temp.getNext();
+  }
+  return null;
+  } 
 
     String toString(){
 	if(current==null)

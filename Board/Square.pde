@@ -7,6 +7,9 @@ class Square{
     private int cost;
     private int x,y,w,h;
     private color c;
+    private int numHouses;
+    private boolean hasHotel;
+    private Person owner;
 
     Square(){
       
@@ -20,6 +23,9 @@ class Square{
       this.c=c;
       this.name=name;
       this.cost=cost;
+      numHouses=0;
+      hasHotel=false;
+      owner=null;
     }
 
     int rent(){
@@ -35,7 +41,15 @@ class Square{
       return c;
     }
     
+    int getCost(){
+     return cost; 
+    }
+    
     String getName(){
      return name; 
+    }
+    
+    String toString(){
+     return getName(); 
     }
 }

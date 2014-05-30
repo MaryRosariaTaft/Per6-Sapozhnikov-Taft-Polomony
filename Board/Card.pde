@@ -12,7 +12,7 @@ class Card{
 
     }
     
-    Card(int type, String text, int value, boolean outJail){
+    Card(int type, String text, int value, boolean outJail, Square move){
       this.type=type;
       this.text=text;
       this.value=value;

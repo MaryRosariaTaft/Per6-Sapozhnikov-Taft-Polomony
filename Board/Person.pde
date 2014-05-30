@@ -5,6 +5,7 @@ class Person{
 
     private String name;
     private LL<Square> squares; //Squares on the Board
+    private LL<Square> ownedSquares;
     private Square currentSquare; //Person's current Square
     private int money;
     private boolean inJail;
@@ -19,7 +20,17 @@ class Person{
 	this.name=name;
 	money=1500;
 	inJail=false;
+        ownedSquares=new LL<Square>();
     }
+
+  void buy(Square s){
+    if(s.getCost()>money){
+       //IMPOOREXCEPTION 
+    } else{
+      money-=s.getCost();
+      ownedSquares.add(s);
+    }
+  }
 
     void move(){
 	squares.forward();
@@ -50,6 +61,8 @@ class Person{
 	//}
 	return again;
     }
+    
+    
     
     
     Square square(){return currentSquare;}
