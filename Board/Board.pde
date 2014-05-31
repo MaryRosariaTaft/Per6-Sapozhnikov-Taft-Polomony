@@ -285,12 +285,12 @@ void setup(){
   //if a card calls for money to be collected or given away, we can use a negative value
   Chance.add(new Card(0,"Advance To GO",0,false,squares.find("GO")));//200?
   Chance.add(new Card(0,"Advance To Illinois Avenue",0,false,squares.find("Illinois Avenue")));
-  Chance.add(new Card(false));
-  Chance.add(new Card(true));
+  Chance.add(new Card(1));
+  Chance.add(new Card(0));
   Chance.add(new Card(0,"Advance To St. Charles",0,false,squares.find("St. Charles Place")));
   Chance.add(new Card(0,"Bank pays you dividend of $50",50,false,null));
   //GOOJF
-  //GB3S
+  Chance.add(new Card(2));
   Chance.add(new Card(0,"Go directly to Jail – do not pass Go, do not collect $200",0,true,null));
   //house repairs
   Chance.add(new Card(0,"Pay poor tax of $15",-15,false,null));
