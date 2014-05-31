@@ -25,7 +25,7 @@ class Person{
 
   void buy(Square s){
     if(s.getCost()>money){
-       //IMPOOREXCEPTION 
+       //IAMPOOREXCEPTION 
     } else{
       money-=s.getCost();
       ownedSquares.add(s);

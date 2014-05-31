@@ -28,6 +28,10 @@ class Square{
       owner=null;
     }
 
+    boolean isRR(){
+     return name.contains("Railroad");
+    } 
+
     int rent(){
       return 100;
     }
