@@ -302,7 +302,22 @@ void setup(){
   
   LL<Card> CommunityChest=new LL<Card>();
   
-//  CommunityChest.add(new Card(1,"",0,false));
+  CommunityChest.add(new Card(1,"Advance To GO",0,false,squares.find("GO")));//200?
+  CommunityChest.add(new Card(1,"Bank error in your favor – collect $75",75,false,null));
+  CommunityChest.add(new Card(1,"Doctor's fees – Pay $50",-50,false,null));
+  //GOOJF
+  CommunityChest.add(new Card(1,"Go directly to Jail – do not pass Go, do not collect $200",0,true,null));
+  //price of card = (-1)(numPlayers)($10)
+  //price of card = (-1)(numPlayers)($50)
+  CommunityChest.add(new Card(1,"Income Tax refund – collect $20",20,false,null));
+  CommunityChest.add(new Card(1,"Life Insurance Matures – collect $100",100,false,null));
+  CommunityChest.add(new Card(1,"Pay Hospital Fees of $100",-100,false,null));
+  CommunityChest.add(new Card(1,"Receive $25 Consultancy Fee",25,false,null));
+  //street repairs
+  CommunityChest.add(new Card(1,"You have won second prize in a beauty contest– collect $10",10,false,null));
+  CommunityChest.add(new Card(1,"You inherit $100",100,false,null));
+  CommunityChest.add(new Card(1,"From sale of stock you get $50",50,false,null));
+  CommunityChest.add(new Card(1,"Holiday Fund matures - Receive $100",100,false,null));
 
   //init [LL of] Persons
   //still testing
