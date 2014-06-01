@@ -9,11 +9,37 @@ class myColor{
   }
 }
 
+private boolean ready=false;
+private int numPlayers;
+
 void setup(){
   
-  //big thanks to http://en.wikipedia.org/wiki/Template:Monopoly_board_layout
+  LL<Person> players=new LL<Person>();
+  //players.add(new Person("Player1",squares));
+  
+  /*
+  
+  initiating players:
+  
+  - make popup (or use Board or terminal(?)) before doing the rest of the setup
+  - print("Enter number of players");
+  - numPlayers=intInput; (have to figure out how to read&accept that input)
+  - while(intInput>0){
+      print("Player "+numPlayers-intInput+"'s name: "); //we should most definitely have a Player 0
+      players.add(new Person(stringInput,squares);
+      intInput--; //can be edited since the original value is saved in numPlayers
+    }
+  - ready=true;
+  - then do everything else
+  
+  */
+  
+  //////////////////////////////////////////////////////////////////////////
   
   size(550,550);
+ 
+  //big thanks to http://en.wikipedia.org/wiki/Template:Monopoly_board_layout
+  
   
   //init LL of Squares
   LL<Square> squares=new LL<Square>();
@@ -331,9 +357,6 @@ void setup(){
   //does that work?
   //or did you have something else in mind?
   //(I didn't edit that in the Person class [yet, in case you do disagree])
-  
-  LL<Person> players=new LL<Person>();
-  players.add(new Person("Player1",squares));
   
   //init&draw dice
   //P.S. can't put a draw() method in the Die class if it's static
