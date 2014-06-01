@@ -53,6 +53,10 @@ class Square{
      return name; 
     }
     
+    Person getOwner(){
+     return owner; 
+    }
+    
     String toString(){
      return getName(); 
     }
