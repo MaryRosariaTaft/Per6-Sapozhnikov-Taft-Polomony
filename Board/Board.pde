@@ -1,3 +1,5 @@
+import controlP5.*;
+
 //workaround for LL of colors
 class myColor{
   private color c;
@@ -9,12 +11,92 @@ class myColor{
   }
 }
 
+ControlP5 cp5;
+//String textValue="";
+Textlabel messages;
+PFont font = createFont("arial",20);
 private boolean ready=false;
 private int numPlayers;
+private int maxPlayers = 4; //we need one method per each person, so we have to set a max
+
+LL<Square> squares;
+LL<Person> players;
+
+void controlEvent(ControlEvent e){
+  if(e.isAssignableFrom(Textfield.class)){
+    
+  }
+}
+
+public void person0(String name){
+  
+}
+public void person1(String name){
+  
+}
+public void person2(String name){
+  
+}
+public void person3(String name){
+  
+}
+public void enter2(int numP){
+  for(int i=0; i<numP; i++){
+    String name = cp5.get(Textfield.class,("person"+i)).getText();
+    Person p = new Person(name, squares);
+    players.add(p);
+  }
+  println(players.toString());
+}
+
+public void enter(int x){
+  String s = cp5.get(Textfield.class,"input").getText();
+  try{
+    int numP = Integer.parseInt(s);
+    cp5.remove(messages);
+    if(numP>1 && numP<=maxPlayers){
+      messages = cp5.addTextlabel("messages")
+                    .setText("Number of players: "+numP)
+                    .setPosition(200,50)
+                    .setFont(font)
+                    ;
+      cp5.remove("input");
+      numPlayers = numP;
+      background(150);
+      fill(150);
+      for(int i=0; i<numP; i++){
+        cp5.addTextfield("person"+i)
+           .setPosition(100,100*(1+i))
+           .setSize(200,40)
+           .setFont(font)
+           .setFocus(true)
+           .setColor(color(255,0,0))
+           ;
+      }
+      cp5.addBang("enter2")
+         .setPosition(100,100*(numP+1))
+         .setSize(80,40)
+         .setValue(numP)
+         .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+         ; 
+    } else{
+      messages = cp5.addTextlabel("messages")
+                    .setText("Number of players: "+numP)
+                    .setPosition(200,50)
+                    .setFont(font)
+                    ;
+    }
+  } catch(Exception e){
+    messages.setText("Please enter the number of players");
+  }
+}
+public void input(String s){
+  println("input("+s+") called");  
+}
 
 void setup(){
   
-  LL<Person> players=new LL<Person>();
+  players=new LL<Person>();
   //players.add(new Person("Player1",squares));
   
   /*
@@ -37,12 +119,38 @@ void setup(){
   //////////////////////////////////////////////////////////////////////////
   
   size(550,550);
+  
+  //testing cp5
+  cp5 = new ControlP5(this);
+         
+
+     
+  cp5.addTextfield("input")
+     .setPosition(100,100)
+     .setSize(200,40)
+     .setFont(font)
+     .setFocus(true)
+     .setColor(color(255,0,0))
+     ;
+     
+  cp5.addBang("enter")
+     .setPosition(100,200)
+     .setSize(80,40)
+     .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+     ;   
+
+  messages = cp5.addTextlabel("messages")
+                .setText("")
+                .setPosition(200,50)
+                .setFont(font)
+                ;
+  //done testing
  
   //big thanks to http://en.wikipedia.org/wiki/Template:Monopoly_board_layout
   
   
   //init LL of Squares
-  LL<Square> squares=new LL<Square>();
+  squares=new LL<Square>();
   
   //prepare colors to be assigned to Squares
   
@@ -360,5 +468,14 @@ void setup(){
   
   //init&draw dice
   //P.S. can't put a draw() method in the Die class if it's static
-  
+    
+
+}
+
+void draw(){
+  background(150);
+  for(int i=0;i<squares.getLength();i++){
+    squares.getCurrent().draw();
+    squares.forward();
+  }
 }

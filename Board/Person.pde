@@ -69,5 +69,9 @@ class Person{
     boolean inJail(){return inJail;} //although this shouldn't be necessary, since "inJail" is a check in turn()
     String name(){return name;}
     int money(){return money;} //not sure this one is even necessary
+    
+    public String toString(){
+      return name;
+    }
 
 }
