@@ -16,6 +16,7 @@ ControlP5 cp5;
 Textlabel messages;
 PFont font = createFont("arial",20);
 private boolean ready=false;
+private boolean loaded=false;
 private int numPlayers;
 private int maxPlayers = 4; //we need one method per each person, so we have to set a max
 LL<Square> squares=new LL<Square>();
@@ -37,23 +38,33 @@ public void person3(String name){
 }
 
 public void enter2(int numP){
-  //add all the entered names to 'players' after initiating them as Persons
-  for(int i=0; i<numP; i++){
-    String name = cp5.get(Textfield.class,("Player "+(i+1)+"'s Name")).getText();
-    Person p = new Person(name, squares);
-    players.add(p);
+  if(loaded){
+    //add all the entered names to 'players' after initiating them as Persons
+    for(int i=0; i<numP; i++){
+      String name = cp5.get(Textfield.class,("person"+i)).getText();
+      Person p = new Person(name, squares);
+      players.add(p);
+    }
+    println("Players: "+players.toString());
+    cp5.remove("person0");
+    cp5.remove("person1");
+    cp5.remove("person2");
+    cp5.remove("person3");
+    cp5.remove("enter2");
+    cp5.remove("messages");
+    fill(150);
+    //remove all the cp5 stuff
+    ready=true;
+  
+    //if(invalid input)
+    //messages.setText("Please enter players' names");
   }
-  println("Players: "+players.toString());
-  //remove all the cp5 stuff
-  ready=true;
-
-  //if(invalid input)
-  //messages.setText("Please enter players' names");
+  loaded=true;
 }
 
 //opening screen
 public void enter(int x){
-  String s = cp5.get(Textfield.class,"Enter Number of Players (1-4)").getText();
+  String s = cp5.get(Textfield.class,"Enter Number of Players (2-4)").getText();
   try{
     int numP = Integer.parseInt(s);
     cp5.remove(messages);
@@ -65,12 +76,13 @@ public void enter(int x){
                     .setPosition(200,50)
                     .setFont(font)
                     ;
-      cp5.remove("Enter Number of Players (1-4)");//and this?
+      cp5.remove("Enter Number of Players (2-4)");//and this?
       numPlayers = numP;
       background(150);
       fill(150);
+      cp5.remove("enter");
       for(int i=0; i<numP; i++){
-        cp5.addTextfield("Player "+(i+1)+"'s Name")
+        cp5.addTextfield("person"+i)
            .setPosition(100,100*(1+i))
            .setSize(200,40)
            .setFont(font)
@@ -113,7 +125,7 @@ void setup(){
   cp5 = new ControlP5(this);
          
   //textbox
-  cp5.addTextfield("Enter Number of Players (1-4)")
+  cp5.addTextfield("Enter Number of Players (2-4)")
      .setPosition(100,100)
      .setSize(200,40)
      .setFont(font)
@@ -463,6 +475,7 @@ void setup(){
 
 void draw(){
   background(150);
+  //fill(150);
   for(int i=0;i<squares.getLength();i++){
     squares.getCurrent().draw();
     squares.forward();
