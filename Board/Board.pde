@@ -18,9 +18,8 @@ PFont font = createFont("arial",20);
 private boolean ready=false;
 private int numPlayers;
 private int maxPlayers = 4; //we need one method per each person, so we have to set a max
-
-LL<Square> squares;
-LL<Person> players;
+LL<Square> squares=new LL<Square>();
+LL<Person> players=new LL<Person>();
 
 void controlEvent(ControlEvent e){
   if(e.isAssignableFrom(Textfield.class)){
@@ -29,43 +28,49 @@ void controlEvent(ControlEvent e){
 }
 
 public void person0(String name){
-  
 }
 public void person1(String name){
-  
 }
 public void person2(String name){
-  
 }
 public void person3(String name){
-  
 }
+
 public void enter2(int numP){
+  //add all the entered names to 'players' after initiating them as Persons
   for(int i=0; i<numP; i++){
-    String name = cp5.get(Textfield.class,("person"+i)).getText();
+    String name = cp5.get(Textfield.class,("Player "+(i+1)+"'s Name")).getText();
     Person p = new Person(name, squares);
     players.add(p);
   }
-  println(players.toString());
+  println("Players: "+players.toString());
+  //remove all the cp5 stuff
+  ready=true;
+
+  //if(invalid input)
+  //messages.setText("Please enter players' names");
 }
 
+//opening screen
 public void enter(int x){
-  String s = cp5.get(Textfield.class,"input").getText();
+  String s = cp5.get(Textfield.class,"Enter Number of Players (1-4)").getText();
   try{
     int numP = Integer.parseInt(s);
     cp5.remove(messages);
+    //what exactly does the above line do?
+    //(I just don't see where messages was ever "added" or something in the first place)
     if(numP>1 && numP<=maxPlayers){
       messages = cp5.addTextlabel("messages")
-                    .setText("Number of players: "+numP)
+                    .setText("Enter players' names")
                     .setPosition(200,50)
                     .setFont(font)
                     ;
-      cp5.remove("input");
+      cp5.remove("Enter Number of Players (1-4)");//and this?
       numPlayers = numP;
       background(150);
       fill(150);
       for(int i=0; i<numP; i++){
-        cp5.addTextfield("person"+i)
+        cp5.addTextfield("Player "+(i+1)+"'s Name")
            .setPosition(100,100*(1+i))
            .setSize(200,40)
            .setFont(font)
@@ -74,20 +79,22 @@ public void enter(int x){
            ;
       }
       cp5.addBang("enter2")
-         .setPosition(100,100*(numP+1))
+         //.setPosition(100,100*(numP+1))
+         .setPosition(350,400) //that was just a lazy way to handle the button hitting the Squares.  Sorry.
          .setSize(80,40)
          .setValue(numP)
          .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
          ; 
     } else{
       messages = cp5.addTextlabel("messages")
-                    .setText("Number of players: "+numP)
-                    .setPosition(200,50)
+                    //.setText("Number of players: "+numP)
+                    .setText("Please enter a valid number of players")
+                    .setPosition(75,75)
                     .setFont(font)
                     ;
     }
   } catch(Exception e){
-    messages.setText("Please enter the number of players");
+    messages.setText("Please enter a valid number of players");
   }
 }
 public void input(String s){
@@ -95,37 +102,18 @@ public void input(String s){
 }
 
 void setup(){
-  
-  players=new LL<Person>();
-  //players.add(new Person("Player1",squares));
-  
-  /*
-  
-  initiating players:
-  
-  - make popup (or use Board or terminal(?)) before doing the rest of the setup
-  - print("Enter number of players");
-  - numPlayers=intInput; (have to figure out how to read&accept that input)
-  - while(intInput>0){
-      print("Player "+numPlayers-intInput+"'s name: "); //we should most definitely have a Player 0
-      players.add(new Person(stringInput,squares);
-      intInput--; //can be edited since the original value is saved in numPlayers
-    }
-  - ready=true;
-  - then do everything else
-  
-  */
-  
-  //////////////////////////////////////////////////////////////////////////
-  
+    
   size(550,550);
   
-  //testing cp5
+  //////////////////////////////////////////////////
+
+  //SETTING UP CONTROLP5
+  
+  //init ControlP5
   cp5 = new ControlP5(this);
          
-
-     
-  cp5.addTextfield("input")
+  //textbox
+  cp5.addTextfield("Enter Number of Players (1-4)")
      .setPosition(100,100)
      .setSize(200,40)
      .setFont(font)
@@ -133,24 +121,26 @@ void setup(){
      .setColor(color(255,0,0))
      ;
      
+  //bang (basically a button)
   cp5.addBang("enter")
      .setPosition(100,200)
      .setSize(80,40)
      .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
      ;   
 
+  //stuff to be printed out in case the user enters invalid input
+  //or other stuff the user should know
   messages = cp5.addTextlabel("messages")
                 .setText("")
-                .setPosition(200,50)
+                .setPosition(75,75)
                 .setFont(font)
                 ;
-  //done testing
+ 
+  //////////////////////////////////////////////////
+  
+  //SETTING UP PLAYING BOARD
  
   //big thanks to http://en.wikipedia.org/wiki/Template:Monopoly_board_layout
-  
-  
-  //init LL of Squares
-  squares=new LL<Square>();
   
   //prepare colors to be assigned to Squares
   
@@ -469,7 +459,6 @@ void setup(){
   //init&draw dice
   //P.S. can't put a draw() method in the Die class if it's static
     
-
 }
 
 void draw(){
