@@ -46,6 +46,7 @@ public void enter2(int numP){
       Person p = new Person(name, squares);
       players.add(p);
     }
+    players.forward();
     println("Players: "+players.toString());
     cp5.remove("person0");
     cp5.remove("person1");
@@ -148,7 +149,7 @@ void setup(){
                 .setPosition(75,75)
                 .setFont(font)
                 ;
- 
+                 
   //////////////////////////////////////////////////
   
   //SETTING UP PLAYING BOARD
@@ -319,16 +320,21 @@ void setup(){
      names.forward();
      cst = (int)(costs.getCurrent());
      costs.forward();
-     if(i==8){
-       PImage img = loadImage("Squares/CommunityChestUpright.jpg");
-       squares.add(new Square(i*50,500,50,50,img,n,cst));
+     PImage img=null;
+     //prepage images where necessary
+     if(i==10){
+       img = loadImage("Squares/Go.jpg");
+     }else if(i==8){
+       img = loadImage("Squares/CommunityChestUpright.jpg");
+     }else if(i==5){
+       img = loadImage("Squares/RRUpright.jpg");
+     }else if(i==3){
+       img = loadImage("Squares/ChanceUpright.jpg");
      }
-     //the other images don't work; only one image is loaded :(
-//     if(i==5){
-//       PImage img = loadImage("Squares/RRUpright.jpg");
-//       squares.add(new Square(i*50,500,50,50,img,n,cst));
-//     }
-     else{
+     //create Square with either a color or an image
+     if(img!=null){
+       squares.add(new Square(i*50,500,50,50,img,n,cst));
+     }else{
        squares.add(new Square(i*50,500,50,50,c,n,cst));
      }
   }
@@ -339,12 +345,21 @@ void setup(){
      names.forward();
      cst = (int)(costs.getCurrent());
      costs.forward();
-     if(i==5){
-       PImage img = loadImage("Squares/RRLeft.jpg");
-       squares.add(new Square(0,i*50,50,50,img,n,cst));
-       //println("RRLeft loaded, squares.add(new Square(0,5*50,50,50,img,n,cst)) called");
+     PImage img=null;
+     if(i==10){
+       img = loadImage("Squares/InJailJustVisiting.jpg");
+     }else if(i==8){
+       img = loadImage("Squares/ElectricCompany.jpg");
+     }else if(i==5){
+       img = loadImage("Squares/RRLeft.jpg");
+     }else if(i==3){
+       img = loadImage("Squares/CommunityChestLeft.jpg");
      }
-     squares.add(new Square(0,i*50,50,50,c,n,cst));
+     if(img!=null){
+       squares.add(new Square(0,i*50,50,50,img,n,cst));       
+     }else{
+       squares.add(new Square(0,i*50,50,50,c,n,cst));
+     }
   }
   for(int i=0;i<10;i++){
      c = colors.getCurrent().getColor();
@@ -353,11 +368,21 @@ void setup(){
      names.forward();
      cst = (int)(costs.getCurrent());
      costs.forward();
-     if(i==5){
-       PImage img = loadImage("Squares/RRUpsideDown.jpg");
-       squares.add(new Square(i*50,0,50,50,img,n,cst));
+     PImage img=null;
+     if(i==0){
+       img = loadImage("Squares/FreeParking.jpg");
+     }else if(i==2){
+       img = loadImage("Squares/ChanceUpsideDown.jpg");
+     }else if(i==5){
+       img = loadImage("Squares/RRUpsideDown.jpg");
+     }else if(i==8){
+       img = loadImage("Squares/WaterWorks.jpg");
      }
-     squares.add(new Square(i*50,0,50,50,c,n,cst));
+     if(img!=null){
+       squares.add(new Square(i*50,0,50,50,img,n,cst));       
+     }else{
+       squares.add(new Square(i*50,0,50,50,c,n,cst));
+     }
   }
   for(int i=0;i<10;i++){
      c = colors.getCurrent().getColor();
@@ -366,11 +391,23 @@ void setup(){
      names.forward();
      cst = (int)(costs.getCurrent());
      costs.forward();
-     if(i==5){
-       PImage img = loadImage("Squares/RRRight.jpg");
-       squares.add(new Square(500,i*50,50,50,img,n,cst));
+     PImage img=null;
+     if(i==0){
+       img = loadImage("Squares/GoToJail.jpg");
+     }else if(i==3){
+       img = loadImage("Squares/CommunityChestRight.jpg");
+     }else if(i==5){
+       img = loadImage("Squares/RRRight.jpg");
+     }else if(i==6){
+       img = loadImage("Squares/ChanceRight.jpg");
+     }else if(i==8){
+       img = loadImage("Squares/IncomeTax.jpg");
      }
-     squares.add(new Square(500,i*50,50,50,c,n,cst)); 
+     if(img!=null){
+       squares.add(new Square(500,i*50,50,50,img,n,cst));       
+     }else{
+       squares.add(new Square(500,i*50,50,50,c,n,cst));
+     }
   }
 
   //set current at starting point again
