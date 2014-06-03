@@ -9,18 +9,22 @@ class Person{
     private Square currentSquare; //Person's current Square
     private int money;
     private boolean inJail;
+    private PImage token;
+    private int quadrant; //part of the Square in which the Person's token lies
     
     void setSquare(Square square){this.currentSquare=square;}
     void setJail(boolean inJail){this.inJail=inJail;}
     //name and squares shouldn't be edited; money should only be edited by adding and subtracting, not with a set method
 
-    Person(String name, LL<Square> squares){
+    Person(String name, LL<Square> squares, PImage token, int quadrant){
 	this.squares=squares;
         currentSquare=squares.getCurrent(); //"GO"
 	this.name=name;
 	money=1500;
 	inJail=false;
         ownedSquares=new LL<Square>();
+        this.token=token;
+        this.quadrant=quadrant;
     }
 
   void buy(Square s){
@@ -62,8 +66,16 @@ class Person{
 	return again;
     }
     
-    
-    
+    void draw(){
+      if(quadrant==1)
+        image(token,currentSquare.getX(),currentSquare.getY());
+      else if(quadrant==2)
+        image(token,currentSquare.getX()+25,currentSquare.getY());
+      else if(quadrant==3)
+        image(token,currentSquare.getX(),currentSquare.getY()+25);
+      else
+        image(token,currentSquare.getX()+25,currentSquare.getY()+25);      
+    }
     
     Square square(){return currentSquare;}
     boolean inJail(){return inJail;} //although this shouldn't be necessary, since "inJail" is a check in turn()

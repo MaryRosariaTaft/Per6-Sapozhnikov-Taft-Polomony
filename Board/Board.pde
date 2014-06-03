@@ -43,7 +43,12 @@ public void enter2(int numP){
     //add all the entered names to 'players' after initiating them as Persons
     for(int i=0; i<numP; i++){
       String name = cp5.get(Textfield.class,("person"+i)).getText();
-      Person p = new Person(name, squares);
+      PImage token=null;
+      if(i==0) token=loadImage("Tokens/Car.jpg");
+      else if(i==1) token=loadImage("Tokens/Dog.jpg");
+      else if(i==2) token=loadImage("Tokens/Ship.jpg");
+      else if(i==3) token=loadImage("Tokens/Thimble.jpg");
+      Person p = new Person(name, squares, token, i+1);
       players.add(p);
     }
     players.forward();
@@ -541,5 +546,9 @@ void draw(){
   for(int i=0;i<squares.getLength();i++){
     squares.getCurrent().draw();
     squares.forward();
+  }
+  for(int i=0;i<players.getLength();i++){
+    players.getCurrent().draw();
+    players.forward();
   }
 }

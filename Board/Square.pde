@@ -71,6 +71,14 @@ class Square{
      return cost; 
     }
     
+    int getX(){
+      return x;
+    }
+    
+    int getY(){
+     return y; 
+    }
+    
     String getName(){
      return name; 
     }
