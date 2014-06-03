@@ -492,14 +492,14 @@ void setup(){
   Chance.add(new Card(0));
   Chance.add(new Card(0,"Advance To St. Charles",0,false,squares.find("St. Charles Place")));
   Chance.add(new Card(0,"Bank pays you dividend of $50",50,false,null));
-  //GOOJF
+  Chance.add(new Card(3));
   Chance.add(new Card(2));
   Chance.add(new Card(0,"Go directly to Jail – do not pass Go, do not collect $200",0,true,null));
-  //house repairs
+  Chance.add(new Card(5));
   Chance.add(new Card(0,"Pay poor tax of $15",-15,false,null));
   Chance.add(new Card(0,"Take a trip to Reading Railroad",0,false,squares.find("Reading Railroad")));
   Chance.add(new Card(0,"Take a walk on the Boardwalk",0,false,squares.find("Boardwalk")));
-  //price of card = (numPlayers-1)(-50)
+  Chance.add(new Card(0,"You have been elected chairman of the board – pay each player $50",(numPlayers-1)*-50,false,null));
   Chance.add(new Card(0,"Your building loan matures – collect $150",150,false,null));
   Chance.add(new Card(0,"You have won a crossword competition - collect $100",100,false,null));  
   
@@ -508,15 +508,15 @@ void setup(){
   CommunityChest.add(new Card(1,"Advance To GO",0,false,squares.find("GO")));//200?
   CommunityChest.add(new Card(1,"Bank error in your favor – collect $75",75,false,null));
   CommunityChest.add(new Card(1,"Doctor's fees – Pay $50",-50,false,null));
-  //GOOJF
+  CommunityChest.add(new Card(4));
   CommunityChest.add(new Card(1,"Go directly to Jail – do not pass Go, do not collect $200",0,true,null));
-  //price of card = (numPlayers-1)(-10)
-  //price of card = (numPlayers-1)(-50)
+  CommunityChest.add(new Card(1,"It is your birthday Collect $10 from each player",(numPlayers-1)*10,false,null));
+  CommunityChest.add(new Card(1,"Grand Opera Night – collect $50 from every player for opening night seats ",(numPlayers-1)*50,false,null));
   CommunityChest.add(new Card(1,"Income Tax refund – collect $20",20,false,null));
   CommunityChest.add(new Card(1,"Life Insurance Matures – collect $100",100,false,null));
   CommunityChest.add(new Card(1,"Pay Hospital Fees of $100",-100,false,null));
   CommunityChest.add(new Card(1,"Receive $25 Consultancy Fee",25,false,null));
-  //street repairs
+  CommunityChest.add(new Card(6));
   CommunityChest.add(new Card(1,"You have won second prize in a beauty contest– collect $10",10,false,null));
   CommunityChest.add(new Card(1,"You inherit $100",100,false,null));
   CommunityChest.add(new Card(1,"From sale of stock you get $50",50,false,null));
