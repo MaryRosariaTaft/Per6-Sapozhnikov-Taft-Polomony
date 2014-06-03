@@ -86,9 +86,68 @@ class Card{
     }
     
     void act(Person p){
-      //a bunch of if statements
-      //method may need return something? 
+      switch (spec){
+        case -1:
+          if(getOutOfJail){
+          } else {
+            regAct(p);
+          }
+          break;
+        case 0:
+          nextUtilAct(p);
+          break;
+        case 1: 
+          nextRRAct(p);
+          break;
+        case 2:
+          goBackThreeAct(p);
+          break;
+        case 3:
+          getOutChanceAct(p);
+          break;     
+        case 4:
+          getOutChestAct(p);
+          break; 
+        case 5:
+          houseRepairsAct(p);
+          break; 
+        case 6:
+          streetRepairsAct(p);
+          break;     
+      }
     }
 
+  void regAct(Person p){
+    p.addMoney(value);
+    p.moveTo(moveTo);
+  }
+  void nextUtilAct(Person p){
+    while(!p.getCurrent().isUtil()){
+      p.move();
+    }
+  }
+  void nextRRAct(Person p){
+    while(!p.getCurrent().isRR()){
+      p.move();
+    }
+  }
+  void goBackThreeAct(Person p){
+    p.back(3);
+  }
+  void getOutChanceAct(Person p){
+    //???
+  }
+  void getOutChestAct(Person p){
+    //???
+  }
+  void houseRepairsAct(Person p){
+    int n = (p.numHouses()*25)+(p.numHotels()*100);
+    p.addMoney(0-n);
+  }
+  void streetRepairsAct(Person p){
+    int n = (p.numHouses()*40)+(p.numHotels()*115);
+    p.addMoney(0-n);
+  } 
+  
 
 }

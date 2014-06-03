@@ -521,7 +521,6 @@ void setup(){
   CommunityChest.add(new Card(1,"You inherit $100",100,false,null));
   CommunityChest.add(new Card(1,"From sale of stock you get $50",50,false,null));
   CommunityChest.add(new Card(1,"Holiday Fund matures - Receive $100",100,false,null));
-
   //init [LL of] Persons
   //still testing
   //if every Person shares the same instance of squares

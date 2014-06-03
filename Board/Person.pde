@@ -6,7 +6,7 @@ class Person{
     private String name;
     private LL<Square> squares; //Squares on the Board
     private LL<Square> ownedSquares;
-    private Square currentSquare; //Person's current Square
+    private Square currentSquare; //Person's current Square IS NOT UPDATED WHEN PERSON MOVES
     private int money;
     private boolean inJail;
     private PImage token;
@@ -26,6 +26,33 @@ class Person{
         this.token=token;
         this.quadrant=quadrant;
     }
+    
+    int numHouses(){
+      int ans=0;
+      Square cur = ownedSquares.getCurrent();
+      ownedSquares.forward();
+      Square tmp = ownedSquares.getCurrent();
+      while(tmp!=cur){
+        tmp = ownedSquares.getCurrent();
+        ans+=tmp.getNumHouses();
+        ownedSquares.forward();
+      }     
+      return ans;
+    }
+    int numHotels(){
+      int ans=0;
+      Square cur = ownedSquares.getCurrent();
+      ownedSquares.forward();
+      Square tmp = ownedSquares.getCurrent();
+      while(tmp!=cur){
+        tmp = ownedSquares.getCurrent();
+        if(tmp.getHasHotel()){
+          ans++;
+        }
+        ownedSquares.forward();
+      }     
+      return ans;
+    }
 
   void buy(Square s){
     if(s.getCost()>money){
@@ -38,6 +65,21 @@ class Person{
 
     void move(){
 	squares.forward();
+    }
+    void back(int n){
+      squares.back();
+    }
+
+    //i don't think this method is finished yet, I just made it because it needs to exist
+    void move(int n){
+      for(int i=0; i<n; i++){
+        move();
+      }
+    }
+    void moveTo(Square target){
+      while(squares.getCurrent() != target){
+        move();
+      } 
     }
 
     void jailHouseRock(){
@@ -66,6 +108,15 @@ class Person{
 	return again;
     }
     
+    //positive for pay, negative for get paid
+    void pay(Person other, int d){
+      money-=d;
+      other.addMoney(d);
+    }
+    void addMoney(int d){
+      money+=d;
+    }
+    
     void draw(){
       if(quadrant==1)
         image(token,currentSquare.getX(),currentSquare.getY());
@@ -81,6 +132,8 @@ class Person{
     boolean inJail(){return inJail;} //although this shouldn't be necessary, since "inJail" is a check in turn()
     String name(){return name;}
     int money(){return money;} //not sure this one is even necessary
+    void setMoney(int d){money=d;};
+    Square getCurrent(){return squares.getCurrent();}
     
     public String toString(){
       return name;

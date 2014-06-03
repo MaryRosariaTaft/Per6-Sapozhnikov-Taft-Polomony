@@ -46,8 +46,11 @@ class Square{
 
     boolean isRR(){
      return name.contains("Railroad");
-    } 
-
+    }
+    boolean isUtil(){
+      return name.equals("Electric Company") || name.equals("Water Works");
+    }
+    
     int rent(){
       return 100;
     }
@@ -77,6 +80,13 @@ class Square{
     
     int getY(){
      return y; 
+    }
+    
+    int getNumHouses(){
+      return numHouses;
+    }
+    boolean getHasHotel(){
+      return hasHotel;
     }
     
     String getName(){
