@@ -12,6 +12,7 @@ class myColor{
 }
 
 ControlP5 cp5;
+//PImage img;
 //String textValue="";
 Textlabel messages;
 PFont font = createFont("arial",20);
@@ -318,7 +319,18 @@ void setup(){
      names.forward();
      cst = (int)(costs.getCurrent());
      costs.forward();
-     squares.add(new Square(i*50,500,50,50,c,n,cst));
+     if(i==8){
+       PImage img = loadImage("Squares/CommunityChestUpright.jpg");
+       squares.add(new Square(i*50,500,50,50,img,n,cst));
+     }
+     //the other images don't work; only one image is loaded :(
+//     if(i==5){
+//       PImage img = loadImage("Squares/RRUpright.jpg");
+//       squares.add(new Square(i*50,500,50,50,img,n,cst));
+//     }
+     else{
+       squares.add(new Square(i*50,500,50,50,c,n,cst));
+     }
   }
   for(int i=10;i>0;i--){
      c = colors.getCurrent().getColor();
@@ -327,6 +339,11 @@ void setup(){
      names.forward();
      cst = (int)(costs.getCurrent());
      costs.forward();
+     if(i==5){
+       PImage img = loadImage("Squares/RRLeft.jpg");
+       squares.add(new Square(0,i*50,50,50,img,n,cst));
+       //println("RRLeft loaded, squares.add(new Square(0,5*50,50,50,img,n,cst)) called");
+     }
      squares.add(new Square(0,i*50,50,50,c,n,cst));
   }
   for(int i=0;i<10;i++){
@@ -336,6 +353,10 @@ void setup(){
      names.forward();
      cst = (int)(costs.getCurrent());
      costs.forward();
+     if(i==5){
+       PImage img = loadImage("Squares/RRUpsideDown.jpg");
+       squares.add(new Square(i*50,0,50,50,img,n,cst));
+     }
      squares.add(new Square(i*50,0,50,50,c,n,cst));
   }
   for(int i=0;i<10;i++){
@@ -345,6 +366,10 @@ void setup(){
      names.forward();
      cst = (int)(costs.getCurrent());
      costs.forward();
+     if(i==5){
+       PImage img = loadImage("Squares/RRRight.jpg");
+       squares.add(new Square(500,i*50,50,50,img,n,cst));
+     }
      squares.add(new Square(500,i*50,50,50,c,n,cst)); 
   }
 
