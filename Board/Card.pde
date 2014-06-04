@@ -121,11 +121,15 @@ class Card{
     p.addMoney(value);
     p.moveTo(moveTo);
   }
+  
+  //not finished
   void nextUtilAct(Person p){
     while(!p.getCurrent().isUtil()){
       p.move();
     }
   }
+  
+  //not finished
   void nextRRAct(Person p){
     while(!p.getCurrent().isRR()){
       p.move();

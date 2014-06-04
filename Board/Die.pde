@@ -11,4 +11,6 @@ static class Die{
 	return r.nextInt(6)+1;
     }
     
+    
+    
 }

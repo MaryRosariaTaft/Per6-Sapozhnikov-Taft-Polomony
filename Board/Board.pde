@@ -15,6 +15,7 @@ ControlP5 cp5;
 //PImage img;
 //String textValue="";
 Textlabel messages;
+int time=0;
 PFont font = createFont("arial",20);
 private boolean ready=false;
 private boolean loaded=false;
@@ -62,7 +63,8 @@ public void enter2(int numP){
     fill(150);
     //remove all the cp5 stuff
     ready=true;
-  
+    //frameRate(.5);
+    players.getCurrent().turn();
     //if(invalid input)
     //messages.setText("Please enter players' names");
   }
@@ -130,7 +132,7 @@ void setup(){
   
   //init ControlP5
   cp5 = new ControlP5(this);
-         
+     
   //textbox
   cp5.addTextfield("Enter Number of Players (2-4)")
      .setPosition(100,100)
@@ -540,6 +542,7 @@ void setup(){
 }
 
 void draw(){
+  time=millis();
   background(150);
   //fill(150);
   for(int i=0;i<squares.getLength();i++){
