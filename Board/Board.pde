@@ -1,3 +1,5 @@
+import java.io.*;
+import java.util.*;
 import controlP5.*;
 
 //workaround for LL of colors
@@ -64,7 +66,7 @@ public void enter2(int numP){
 	cp5.remove("messages");
 	fill(150);
 	ready=true;//doesn't do anything (yet?)
-	players.getCurrent().turn();
+	players.getCurrent().turn(0);
     }
     loaded=true;
 }

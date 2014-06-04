@@ -12,13 +12,18 @@ class Person {
     private PImage token;
     private int quadrant; //part of the Square in which the Person's token lies
 
+    //set methods
+    //name and squares shouldn't be edited; money should only be edited by adding and subtracting, not with a set method
     void setSquare(Square square) {
 	this.currentSquare=square;
     }
     void setJail(boolean inJail) {
 	this.inJail=inJail;
     }
-    //name and squares shouldn't be edited; money should only be edited by adding and subtracting, not with a set method
+    
+    Person(){
+      
+    }
 
     Person(String name, LL<Square> squares, PImage token, int quadrant) {
 	this.squares=squares;
@@ -43,6 +48,7 @@ class Person {
 	}     
 	return ans;
     }
+    
     int numHotels() {
 	int ans=0;
 	Square cur = ownedSquares.getCurrent();
@@ -70,7 +76,7 @@ class Person {
     void move() {
 	squares.forward();
 	currentSquare=squares.getCurrent();
-	println("("+currentSquare.getX()+", "+currentSquare.getY()+")");
+	println(name+"("+currentSquare.getX()+", "+currentSquare.getY()+")");
     }
     void back(int n) {
 	squares.back();
@@ -92,25 +98,26 @@ class Person {
 	//jail stuff
     }
 
-    //return true if Person goes again
-    void turn() {
+    void turn(int initialNumDoubles) {
 	if (money<0) {
 	    return;
 	}
 	money--;
-	draw();
-    
-	if (time%100==1) {
-	    println("turn");
-	    if (inJail) {
-		//stuff
-	    }
-	    boolean again = false;
+//	if (time%100==1) {
+//	    println("turn");
+//	    if (inJail) {
+//		//stuff
+//	    }
+if(initialNumDoubles>=3){
+  //go to jail
+}
+	    int newNumDoubles=initialNumDoubles;
 	    int roll1=Die.roll();
 	    int roll2=Die.roll();
 	    if (roll1==roll2) {
-		again=true;
+		newNumDoubles++;
 	    }
+            println(name+" rolled "+roll1+"+"+roll2);
 	    //move roll1+roll2 one by one
 	    for (int i=0; i<roll1+roll2; i++) {
 		move();
@@ -119,16 +126,18 @@ class Person {
 	    //if(???goToJail){
 	    //inJail=true;
 	    //}
-	    if (again) {
-		turn();
+	    if (newNumDoubles>initialNumDoubles) {
+                //if doubles were rolled, go again
+		turn(newNumDoubles);
 	    } else {
+                //otherwise, go to next person and run turn
 		players.forward();
-		players.getCurrent().turn();
+		players.getCurrent().turn(0);
 	    }
-	} else {
-	    time=millis();
-	    turn();
-	}
+//	} else {
+//	    time=millis();
+//	    turn(0);
+//	}
     }
 
     //positive for pay, negative for get paid
@@ -151,12 +160,16 @@ class Person {
 	    image(token, currentSquare.getX()+25, currentSquare.getY()+25);
     }
 
+
+    //get methods
+    
     Square square() {
 	return currentSquare;
     }
+    //this shouldn't be necessary, since "inJail" is a check in turn(), but might as well
     boolean inJail() {
 	return inJail;
-    } //although this shouldn't be necessary, since "inJail" is a check in turn()
+    }
     String name() {
 	return name;
     }
@@ -165,13 +178,13 @@ class Person {
     } //not sure this one is even necessary
     void setMoney(int d) {
 	money=d;
-    };
+    }
     Square getCurrent() {
 	return squares.getCurrent();
     }
-
     public String toString() {
 	return name;
     }
+    
 }
 
