@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+
 static class Die{
 
     Die(){
@@ -10,7 +11,5 @@ static class Die{
 	Random r=new Random();
 	return r.nextInt(6)+1;
     }
-    
-    
-    
+
 }

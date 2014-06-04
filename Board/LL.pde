@@ -47,50 +47,50 @@ class LL<E>{
     
     //extra functionality
     void addBefore(E d){
-      Node<E> n=new Node<E>(d);
-      if(current==null)
-          current=n;
-      else{
-          n.setPrev(current.getPrev());
-          current.getPrev().setNext(n);
-          n.setNext(current);
-          current.setPrev(n);
-          current=n;
-      }
+	Node<E> n=new Node<E>(d);
+	if(current==null)
+	    current=n;
+	else{
+	    n.setPrev(current.getPrev());
+	    current.getPrev().setNext(n);
+	    n.setNext(current);
+	    current.setPrev(n);
+	    current=n;
+	}
     }
     
     //removes current Node
     //null if removing last Node
     //new current is current.getNext() otherwise
     E remove(){
-      if(current==null)
-          return null;
-      E data=current.getData(); //or getCurrent();
-      if(length==1)
-          current=null;
-      else{
-          current.getNext().setPrev(current.getPrev());
-          current.getPrev().setNext(current.getNext());
-          current=current.getNext();
-      }
-      length--;
-      return data;
+	if(current==null)
+	    return null;
+	E data=current.getData(); //or getCurrent();
+	if(length==1)
+	    current=null;
+	else{
+	    current.getNext().setPrev(current.getPrev());
+	    current.getPrev().setNext(current.getNext());
+	    current=current.getNext();
+	}
+	length--;
+	return data;
     }
     
     //extra functionality
     E removeAndMoveBack(){
-      if(current==null)
-          return null;
-      E data=current.getData(); //or getCurrent();
-      if(length==1)
-          current=null;
-      else{
-          current.getNext().setPrev(current.getPrev());
-          current.getPrev().setNext(current.getNext());
-          current=current.getPrev();
-      }
-      length--;
-      return data;
+	if(current==null)
+	    return null;
+	E data=current.getData(); //or getCurrent();
+	if(length==1)
+	    current=null;
+	else{
+	    current.getNext().setPrev(current.getPrev());
+	    current.getPrev().setNext(current.getNext());
+	    current=current.getPrev();
+	}
+	length--;
+	return data;
     }
 
     void forward(){
@@ -102,7 +102,7 @@ class LL<E>{
     }
     
     int getLength(){
-       return length; 
+	return length; 
     }
 
     E getCurrent(){
@@ -110,19 +110,19 @@ class LL<E>{
 	return current.getData();
     }
     
-  E find(String target){
-  if(current==null)
-      return null;
-  String s=current.toString()+" ";
-  Node<E> temp=current.getNext();
-  while(temp!=current){
-      if(target.equals(s)){
-        return temp.getData();
-      }
-      temp=temp.getNext();
-  }
-  return null;
-  } 
+    E find(String target){
+	if(current==null)
+	    return null;
+	String s=current.toString()+" ";
+	Node<E> temp=current.getNext();
+	while(temp!=current){
+	    if(target.equals(s)){
+		return temp.getData();
+	    }
+	    temp=temp.getNext();
+	}
+	return null;
+    } 
 
     String toString(){
 	if(current==null)
