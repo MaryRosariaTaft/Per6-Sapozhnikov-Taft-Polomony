@@ -120,30 +120,44 @@ class Card{
 	p.moveTo(moveTo);
     }
   
-    //not finished
     //if unowned, can be bought
     //if owned, roll dice and pay owner 10x what you roll
     void nextUtilAct(Person p){
 	while(!p.getCurrent().isUtil()){
 	    p.move();
 	}
-    }  
-    //not finished
+        if(p.getCurrentSquare().hasOwner()){
+          int roll1=Die.roll();
+          int roll2=Die.roll();
+          p.pay(p.getCurrentSquare.getOwner(),10*(roll1+roll2));
+        }else{
+          p.purchase(p.getCurrentSquare());
+        }
+    }
     //if unowned, can be bought
     //if owned, pay owner 2x rent
     void nextRRAct(Person p){
 	while(!p.getCurrent().isRR()){
 	    p.move();
 	}
+        if(p.getCurrentSquare().hasOwner()){
+          p.pay(p.getCurrentSquare.getOwner(),2*p.getCurrentSquare.rent());
+        }else{
+          p.purchase(p.getCurrentSquare());
+        }
     }
     void goBackThreeAct(Person p){
 	p.back(3);
     }
+    //the following 2 methods remove GOOJF cards from their
+    //respective decks and then give them to Person p;
+    //a Card will be added back to its deck if/when the Person
+    //decides to use it to get out of jail
     void getOutChanceAct(Person p){
-	//???
+	p.addCard(Chance.remove());
     }
     void getOutChestAct(Person p){
-	//???
+	p.addCard(CommunityChest.remove());
     }
     void houseRepairsAct(Person p){
 	int n = (p.numHouses()*25)+(p.numHotels()*100);
@@ -154,5 +168,8 @@ class Card{
 	p.addMoney(0-n);
     } 
   
+    int getType(){
+      return type;
+    }
 
 }

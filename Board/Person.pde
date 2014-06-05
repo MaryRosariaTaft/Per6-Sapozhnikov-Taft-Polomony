@@ -11,6 +11,9 @@ class Person {
   private boolean inJail;
   private PImage token;
   private int quadrant; //part of the Square in which the Person's token lies
+  private Card chanceGOOJF;
+  private Card chestGOOJF;
+
 
   //set methods
   //name and squares shouldn't be edited; money should only be edited by adding and subtracting, not with a set method
@@ -33,6 +36,8 @@ class Person {
     ownedSquares=new LL<Square>();
     this.token=token;
     this.quadrant=quadrant;
+    chanceGOOJF=null;
+    chestGOOJF=null;
   }
 
   int numHouses() {
@@ -110,28 +115,74 @@ class Person {
     //      inJail=false;
     //    money--;
 
-    players.forward();
-    players.getCurrent().turn(0);
+    if (chanceGOOJF!=null) {
+      //ask to use card (maybe use y/n Buttons?)
+      //if(yes){
+      //  inJail=false;
+      //  Chance.add(chanceGOOJF);
+      //  chanceGOOJF=null;
+      //}
+    } else if (chestGOOJF!=null) {
+      //ask to use card
+      //if(yes)
+      //  inJail=false;
+      //  CommunityChest.add(chestGOOJF);
+      //  chestGOOJF=null;
+      //}
+    } else {
+
+      //*Person is currently forced to try rolling
+      //Person is then forced to pay his way out of jail if he can afford it
+      //so basically you get out of jail one way or another, unless you're broke
+      //temporary (maybe)
+
+      //roll your way out of jail
+      int roll1=Die.roll();
+      int roll2=Die.roll();
+      if (roll1==roll2) {
+        inJail=false;
+      }
+      //fork over money
+      else {
+        //stuck in jail if you can't pay it
+        if (money>=50) {
+          money-=50;
+          inJail=false;
+        }
+      }
+    }
   }
 
   void chance() {
-    println("ch");
+    //println("landed on ch");
     Chance.getCurrent().act(this);
     Chance.forward();
   }
 
   void communityChest() {
-    println("cc");
+    //println("landed on cc");
     CommunityChest.getCurrent().act(this);
     CommunityChest.forward();
   }
 
-  void callButtons() {
-    Button yes = new Button("Yes", color(0, 200, 0), 200, 250);
-    Button no = new Button("No", color(200, 3, 50), 300, 250);
-    //while loop? while(!yes.clicked()||!no.clicked()) ?
-    yes.draw();
-    no.draw();
+  //used to ask Person whether he wants to buy the Square he landed on if he can afford it
+  void purchase(Square s) {
+    //if(money>=currentSquare.getCost()){
+    //    Button yes = new Button("Yes", color(0, 200, 0), 200, 250);
+    //    Button no = new Button("No", color(200, 3, 50), 300, 250);
+    //    //while loop? while(!yes.clicked()||!no.clicked()) ?
+    //    yes.draw();
+    //    no.draw();
+    //    if(yes){
+    //      money-=currentSquare.getCost());
+    //      ownedSquares.add(currentSquare);
+    //      currentSquare.setOwner(this);
+    //    }
+    //    //else, do nothing, keep playing
+    //}else{
+    //    println("you can't afford this"); //or something like that
+    //    //maybe we could display it with cp5's messages instead
+    //}
   }
 
   void turn(int initialNumDoubles) {
@@ -151,6 +202,8 @@ class Person {
     //special conditions for jailed Persons
     if (inJail) {
       jailHouseRock();
+      players.forward();
+      players.getCurrent.turn(0);
     } else if (initialNumDoubles>=3) {
       //send to jail if Person rolls 3 doubles in a row
       goToJail();
@@ -186,8 +239,9 @@ class Person {
           //pay rent
           pay(currentSquare.getOwner(), currentSquare.rent());
         } else {
+          //ask Person if he wants to buy currentSquare
           //doesn't work yet
-          //callButtons();
+          purchase(currentSquare);
         }
       }
 
@@ -198,6 +252,15 @@ class Person {
         players.forward();
         players.getCurrent().turn(0);
       }
+    }
+  }
+
+  void addCard(Card c) {
+    //0 is a chance Card, 1 is cchest
+    if (c.getType()==0) {
+      chanceGOOJF=c;
+    } else {
+      chestGOOJF=c;
     }
   }
 
@@ -236,12 +299,17 @@ class Person {
   }
   int money() {
     return money;
-  } //not sure this one is even necessary
+  }
+  //not sure this one is even necessary
   void setMoney(int d) {
     money=d;
   }
+  //not sure this is correct
   Square getCurrent() {
     return squares.getCurrent();
+  }
+  Square getCurrentSquare() {
+    return currentSquare;
   }
   public String toString() {
     return name;

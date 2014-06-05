@@ -7,10 +7,10 @@ class Square{
     private int cost;
     private int x,y,w,h;
     private color c;
-    private PImage img;
     private int numHouses;
     private boolean hasHotel;
     private Person owner;
+    private PImage img;
 
     Square(){
       
