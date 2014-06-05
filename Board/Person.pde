@@ -75,11 +75,11 @@ class Person {
   void back(int n) {
     squares.back();
   }
-  
+
   void move() {
     squares.forward();
     currentSquare=squares.getCurrent();
-    if(currentSquare.getName().equals("GO")&&!inJail){
+    if (currentSquare.getName().equals("GO")&&!inJail) {
       money+=200;
     }
     println(name+"("+currentSquare.getX()+", "+currentSquare.getY()+")");
@@ -90,13 +90,13 @@ class Person {
       move();
     }
   }
-  
+
   void moveTo(Square target) {
     while (squares.getCurrent () != target) {
       move();
     }
   }
-  
+
   void goToJail() {
     inJail=true;
     moveTo(squares.find("GO TO JAIL"));
@@ -104,61 +104,109 @@ class Person {
 
   void jailHouseRock() {
     //jail stuff
+
+    //    //temp stuff
+    //    if(money<=0)
+    //      inJail=false;
+    //    money--;
+
+    players.forward();
+    players.getCurrent().turn(0);
+  }
+  
+  void chance(){
+    println("ch");
+    Chance.getCurrent().act(this);
+    Chance.forward();
+  }
+  
+  void communityChest(){
+    println("cc");
+    CommunityChest.getCurrent().act(this);
+    CommunityChest.forward();
   }
 
   void turn(int initialNumDoubles) {
-    
+
     //as of now, game terminates when one person goes bankrupt
     //kind of defeats the purpose of Monopoly unless it's just two players
     //we'll work on that
     //maybe
     if (money<=0) {
+      println(name+" went bankrupt");
       return;
     }
-    
+
     //temporary decrement to check other parts of method(s)
     money--;
-    
-    //special conditions
-    if(inJail){
+
+    //special conditions for jailed Persons
+    if (inJail) {
       jailHouseRock();
-      players.forward();
-      players.getCurrent().turn(0);
-      return;
-    }
-    if (initialNumDoubles>=3) {
+    } else if (initialNumDoubles>=3) { //send to jail if 3 doubles in a row
       goToJail();
       players.forward();
       players.getCurrent().turn(0);
-      return;
+    } else {
+
+      //roll dice and move
+      int newNumDoubles=initialNumDoubles; //keeps track of # of consecutive doubles a person has rolled
+      int roll1=Die.roll();
+      int roll2=Die.roll();
+      if (roll1==roll2) {
+        newNumDoubles++;
+      }
+      println(name+" rolled "+roll1+"+"+roll2);
+
+      //otherwise, move roll1+roll2 Squares
+      move(roll1+roll2);
+
+      //handle actions depending on which Square this Person lands on
+      //we can move some of this code into a separate function to make it cleaner
+      String sqName = currentSquare.getName();
+      if (sqName.equals("GO TO JAIL")) {
+        goToJail();
+        players.forward();
+        players.getCurrent().turn(0);
+      } else if (sqName.equals("Community Chest")) {
+        
+        communityChest();
+        
+//        //handle CC cards
+//        println("CC");
+//        return;
+        
+      } else if (sqName.equals("Chance")) {
+        
+        chance();
+        
+//        //handle Ch cards
+//        println("Ch");
+//        return;
+        
+      } else {
+        if (currentSquare.hasOwner()) {
+          //pay rent
+          pay(currentSquare.getOwner(), currentSquare.rent());
+        } else {
+        //ask if Person wants to buy Square
+        //          while(millis()%100!=1){
+        //            Button yes = new Button("Yes",color(0,200,0),250,200);
+        //            Button no = new Button("No",color(200,0,0),200,250);
+        //            yes.draw();
+        //            no.draw();
+        //          }
+        }
+      }
+
+      //next turn 
+      if (newNumDoubles>initialNumDoubles) { //if doubles were rolled, go again
+        turn(newNumDoubles);
+      } else { //otherwise, go to the next Person
+        players.forward();
+        players.getCurrent().turn(0);
+      }
     }
-    
-    //roll dice and move
-    int newNumDoubles=initialNumDoubles;
-    int roll1=Die.roll();
-    int roll2=Die.roll();
-    if (roll1==roll2) {
-      newNumDoubles++;
-    }
-    println(name+" rolled "+roll1+"+"+roll2);
-    //move roll1+roll2 Squares
-    move(roll1+roll2);
-    
-    //special Square(s)
-    if(currentSquare.getName().equals("GO TO JAIL")){
-      goToJail();
-      players.forward();
-      players.getCurrent().turn(0);
-    }
-    
-    //next turn 
-    if (newNumDoubles>initialNumDoubles) { //if doubles were rolled, go again
-      turn(newNumDoubles);
-    } else { //otherwise, go to the next Person
-      players.forward();
-      players.getCurrent().turn(0);
-    }
-    
   }
 
   //positive for pay, negative for get paid

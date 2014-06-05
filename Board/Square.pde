@@ -103,6 +103,10 @@ class Square{
 	return owner; 
     }
     
+    boolean hasOwner(){
+      return owner!=null;
+    }
+    
     String toString(){
 	return getName(); 
     }
