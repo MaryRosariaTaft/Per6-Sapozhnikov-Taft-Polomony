@@ -432,10 +432,8 @@ void setup(){
     //if a card calls for money to be collected or given away, we can use a negative value
     Chance.add(new Card(0,"Advance To GO",0,false,squares.find("GO")));//200?
     Chance.add(new Card(0,"Advance To Illinois Avenue",0,false,squares.find("Illinois Avenue")));
-    Chance.add(new Card(1)); //Advance token to nearest Utility. If unowned, you may buy it from the Bank.
-    //If owned, throw dice and pay owner a total ten times the amount thrown. 
-    Chance.add(new Card(0)); //Advance token to the nearest Railroad and pay owner twice the rental to which he/she is otherwise entitled.
-    //If Railroad is unowned, you may buy it from the Bank. (There are two of these.) 
+    Chance.add(new Card(1)); //Advance token to nearest Utility. If unowned, you may buy it from the Bank.  If owned, throw dice and pay owner a total ten times the amount thrown. 
+    Chance.add(new Card(0)); //Advance token to the nearest Railroad and pay owner twice the rental to which he/she is otherwise entitled.  If Railroad is unowned, you may buy it from the Bank. (There are two of these.) 
     Chance.add(new Card(0,"Advance To St. Charles",0,false,squares.find("St. Charles Place")));
     Chance.add(new Card(0,"Bank pays you dividend of $50",50,false,null));
     Chance.add(new Card(3)); //Get out of Jail free – this card may be kept until needed, or traded/sold 

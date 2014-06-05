@@ -121,12 +121,16 @@ class Card{
     }
   
     //not finished
+    //if unowned, can be bought
+    //if owned, roll dice and pay owner 10x what you roll
     void nextUtilAct(Person p){
 	while(!p.getCurrent().isUtil()){
 	    p.move();
 	}
     }  
     //not finished
+    //if unowned, can be bought
+    //if owned, pay owner 2x rent
     void nextRRAct(Person p){
 	while(!p.getCurrent().isRR()){
 	    p.move();

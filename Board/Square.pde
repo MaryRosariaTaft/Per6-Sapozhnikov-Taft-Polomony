@@ -29,6 +29,7 @@ class Square{
 	owner=null;
 	img=null;
     }
+    
     Square(int x, int y, int w, int h, PImage img, String name, int cost){
 	this.x=x;
 	this.y=y;
@@ -51,8 +52,13 @@ class Square{
 	return name.equals("Electric Company") || name.equals("Water Works");
     }
     
+    //not finished
     int rent(){
 	return 100;
+    }
+    
+    void setOwner(Person p){
+      owner=p;
     }
     
     void draw(){
@@ -85,7 +91,7 @@ class Square{
     int getNumHouses(){
 	return numHouses;
     }
-    boolean getHasHotel(){
+    boolean hasHotel(){
 	return hasHotel;
     }
     
