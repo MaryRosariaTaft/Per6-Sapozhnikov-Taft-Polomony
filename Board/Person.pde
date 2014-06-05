@@ -6,7 +6,7 @@ class Person {
   private String name;
   private LL<Square> squares; //Squares on the Board
   private LL<Square> ownedSquares;
-  private Square currentSquare; //Person's current Square IS NOT UPDATED WHEN PERSON MOVES
+  private Square currentSquare; //Person's current Square
   private int money;
   private boolean inJail;
   private PImage token;
@@ -113,17 +113,25 @@ class Person {
     players.forward();
     players.getCurrent().turn(0);
   }
-  
-  void chance(){
+
+  void chance() {
     println("ch");
     Chance.getCurrent().act(this);
     Chance.forward();
   }
-  
-  void communityChest(){
+
+  void communityChest() {
     println("cc");
     CommunityChest.getCurrent().act(this);
     CommunityChest.forward();
+  }
+
+  void callButtons() {
+    Button yes = new Button("Yes", color(0, 200, 0), 200, 250);
+    Button no = new Button("No", color(200, 3, 50), 300, 250);
+    //while loop? while(!yes.clicked()||!no.clicked()) ?
+    yes.draw();
+    no.draw();
   }
 
   void turn(int initialNumDoubles) {
@@ -143,7 +151,8 @@ class Person {
     //special conditions for jailed Persons
     if (inJail) {
       jailHouseRock();
-    } else if (initialNumDoubles>=3) { //send to jail if 3 doubles in a row
+    } else if (initialNumDoubles>=3) {
+      //send to jail if Person rolls 3 doubles in a row
       goToJail();
       players.forward();
       players.getCurrent().turn(0);
@@ -169,33 +178,16 @@ class Person {
         players.forward();
         players.getCurrent().turn(0);
       } else if (sqName.equals("Community Chest")) {
-        
         communityChest();
-        
-//        //handle CC cards
-//        println("CC");
-//        return;
-        
       } else if (sqName.equals("Chance")) {
-        
         chance();
-        
-//        //handle Ch cards
-//        println("Ch");
-//        return;
-        
       } else {
         if (currentSquare.hasOwner()) {
           //pay rent
           pay(currentSquare.getOwner(), currentSquare.rent());
         } else {
-        //ask if Person wants to buy Square
-        //          while(millis()%100!=1){
-        //            Button yes = new Button("Yes",color(0,200,0),250,200);
-        //            Button no = new Button("No",color(200,0,0),200,250);
-        //            yes.draw();
-        //            no.draw();
-        //          }
+          //doesn't work yet
+          //callButtons();
         }
       }
 
