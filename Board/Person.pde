@@ -72,17 +72,17 @@ class Person {
     }
   }
 
+  void back(int n) {
+    squares.back();
+  }
+  
   void move() {
     squares.forward();
     currentSquare=squares.getCurrent();
-    if(currentSquare.getName().equals("GO")){
+    if(currentSquare.getName().equals("GO")&&!inJail){
       money+=200;
     }
     println(name+"("+currentSquare.getX()+", "+currentSquare.getY()+")");
-  }
-
-  void back(int n) {
-    squares.back();
   }
 
   void move(int n) {
@@ -95,6 +95,11 @@ class Person {
     while (squares.getCurrent () != target) {
       move();
     }
+  }
+  
+  void goToJail() {
+    inJail=true;
+    moveTo(squares.find("GO TO JAIL"));
   }
 
   void jailHouseRock() {
@@ -122,7 +127,7 @@ class Person {
       return;
     }
     if (initialNumDoubles>=3) {
-      inJail=true;
+      goToJail();
       players.forward();
       players.getCurrent().turn(0);
       return;
@@ -141,7 +146,7 @@ class Person {
     
     //special Square(s)
     if(currentSquare.getName().equals("GO TO JAIL")){
-      inJail=true;
+      goToJail();
       players.forward();
       players.getCurrent().turn(0);
     }
