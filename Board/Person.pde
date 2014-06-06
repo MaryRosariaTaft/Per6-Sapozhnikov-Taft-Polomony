@@ -29,9 +29,27 @@ class Person {
 
   Person() {
   }
+  
+//  void initSquares(LL<Square> s){
+//   Square current=s.getCurrent();
+//   s.forward();
+//   Square temp=s.getCurrent();
+//   while(temp!=current){
+//    sq 
+//   }
+//  }
 
   Person(String name, LL<Square> squares, PImage token, int quadrant) {
-    this.squares=squares;
+    this.squares=new LL<Square>();
+    Square cur = squares.getCurrent();
+    squares.forward();
+    Square tmp = squares.getCurrent();
+    while(tmp!=cur){
+      this.squares.add(tmp);
+      squares.forward();
+      tmp = squares.getCurrent();
+    }
+    //this.squares.forward();
     currentSquare=squares.getCurrent(); //"GO"
     this.name=name;
     money=1500;//1500;
@@ -86,11 +104,11 @@ class Person {
   }
 
   void move() {
-    squares.forward();
-    currentSquare=squares.getCurrent();
     if (currentSquare.getName().equals("GO")&&!inJail) {
       money+=200;
     }
+    squares.forward();
+    currentSquare=squares.getCurrent();
     //println(name+"("+currentSquare.getX()+", "+currentSquare.getY()+")");
   }
 
@@ -161,12 +179,14 @@ class Person {
     //println("landed on ch");
     Chance.getCurrent().act(this);
     Chance.forward();
+    newTurn();
   }
 
   void communityChest() {
     //println("landed on cc");
     CommunityChest.getCurrent().act(this);
     CommunityChest.forward();
+    newTurn();
   }
 
   //used to ask Person whether he wants to buy the Square he landed on if he can afford it
@@ -188,6 +208,7 @@ class Person {
                 ;
     } else {
       println("you can't afford this"); //or something like that
+      newTurn();
       //maybe we could display it with cp5's messages instead
     }
     //if(money>=currentSquare.getCost()){
@@ -230,19 +251,21 @@ class Person {
     }
 
     //temporary decrement to check other parts of method(s)
-    money--;
+    //money--;
 
     //special conditions for jailed Persons
     if (inJail) {
       jailHouseRock();
       players.forward();
       players.getCurrent().turn(); 
+      numDoubles=0;
       //may have to reset numDoubles
     } else if (numDoubles>=3) {
       //send to jail if Person rolls 3 doubles in a row
       goToJail();
       players.forward();
       players.getCurrent().turn();
+      numDoubles=0;
       //may have to reset numDoubles
     } else {
 
@@ -259,7 +282,8 @@ class Person {
       println(name+" rolled "+roll1+"+"+roll2);
 
       //otherwise, move roll1+roll2 Squares
-      move(roll1+roll2);
+      //move(roll1+roll2);
+      move(7);//testtesttest
 
       //handle actions depending on which Square this Person lands on
       //we can move some of this code into a separate function to make it cleaner
@@ -269,6 +293,8 @@ class Person {
         players.forward();
         players.getCurrent().turn();
         //may have to reset numDoubles
+      } else if(sqName.equals("IN JAIL")||sqName.equals("FREE PARKING")){
+        //do nothing
       } else if (sqName.equals("Community Chest")) {
         communityChest();
       } else if (sqName.equals("Chance")) {
@@ -277,6 +303,7 @@ class Person {
         if (currentSquare.hasOwner()) {
           //pay rent
           pay(currentSquare.getOwner(), currentSquare.rent());
+          newTurn();
         } else {
           //ask Person if he wants to buy currentSquare
           //doesn't work yet

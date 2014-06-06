@@ -1,3 +1,6 @@
+//When I started writing this code, only God and I knew what I was doing
+//Now, only God knows
+
 import java.io.*;
 import java.util.*;
 import controlP5.*;
@@ -56,6 +59,8 @@ public void yes(int n) {
 
   p.buy(p.getCurrentSquare());
   p.getCurrentSquare().setOwner(p);
+  cp5.remove("yes");
+  cp5.remove("no");
   p.newTurn();
 }
 public void no(int n) {
@@ -65,6 +70,8 @@ public void no(int n) {
     return;
   }
   println("No clicked");
+  cp5.remove("yes");
+  cp5.remove("no");
   p.newTurn();
 }
 

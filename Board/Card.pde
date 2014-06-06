@@ -84,6 +84,7 @@ class Card{
     }
     
     void act(Person p){
+      println(spec);
 	switch (spec){
         case -1:
 	    if(getOutOfJail){
