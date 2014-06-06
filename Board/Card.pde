@@ -129,7 +129,7 @@ class Card{
         if(p.getCurrentSquare().hasOwner()){
           int roll1=Die.roll();
           int roll2=Die.roll();
-          p.pay(p.getCurrentSquare.getOwner(),10*(roll1+roll2));
+          p.pay(p.getCurrentSquare().getOwner(),10*(roll1+roll2));
         }else{
           p.purchase(p.getCurrentSquare());
         }
@@ -141,7 +141,7 @@ class Card{
 	    p.move();
 	}
         if(p.getCurrentSquare().hasOwner()){
-          p.pay(p.getCurrentSquare.getOwner(),2*p.getCurrentSquare.rent());
+          p.pay(p.getCurrentSquare().getOwner(),2*p.getCurrentSquare().rent());
         }else{
           p.purchase(p.getCurrentSquare());
         }

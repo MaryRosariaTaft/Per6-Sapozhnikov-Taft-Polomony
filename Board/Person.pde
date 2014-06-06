@@ -14,6 +14,9 @@ class Person {
   private Card chanceGOOJF;
   private Card chestGOOJF;
 
+  private int numDoubles;
+  private boolean again;
+
 
   //set methods
   //name and squares shouldn't be edited; money should only be edited by adding and subtracting, not with a set method
@@ -31,13 +34,14 @@ class Person {
     this.squares=squares;
     currentSquare=squares.getCurrent(); //"GO"
     this.name=name;
-    money=15;//1500;
+    money=1500;//1500;
     inJail=false;
     ownedSquares=new LL<Square>();
     this.token=token;
     this.quadrant=quadrant;
     chanceGOOJF=null;
     chestGOOJF=null;
+    again=false;
   }
 
   int numHouses() {
@@ -87,7 +91,7 @@ class Person {
     if (currentSquare.getName().equals("GO")&&!inJail) {
       money+=200;
     }
-    println(name+"("+currentSquare.getX()+", "+currentSquare.getY()+")");
+    //println(name+"("+currentSquare.getX()+", "+currentSquare.getY()+")");
   }
 
   void move(int n) {
@@ -167,6 +171,25 @@ class Person {
 
   //used to ask Person whether he wants to buy the Square he landed on if he can afford it
   void purchase(Square s) {
+    if (money>=currentSquare.getCost()) {
+      usedYes = false;
+      cp5.addButton("yes")
+        .setPosition(350, 400)
+          .setSize(80, 40)
+            .setValue((again) ? 1 : 0)
+              .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+                ;
+      usedNo=false;
+      cp5.addButton("no")
+        .setPosition(350, 450)
+          .setSize(80, 40)
+            .setValue((again) ? 1 : 0)
+              .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+                ;
+    } else {
+      println("you can't afford this"); //or something like that
+      //maybe we could display it with cp5's messages instead
+    }
     //if(money>=currentSquare.getCost()){
     //    Button yes = new Button("Yes", color(0, 200, 0), 200, 250);
     //    Button no = new Button("No", color(200, 3, 50), 300, 250);
@@ -185,7 +208,17 @@ class Person {
     //}
   }
 
-  void turn(int initialNumDoubles) {
+  public void newTurn() {
+    if (again) { //if doubles were rolled, go again
+      turn();
+    } else { //otherwise, go to the next Person
+      players.forward();
+      players.getCurrent().turn();
+    }
+  }
+
+
+  void turn() {
 
     //as of now, game terminates when one person goes bankrupt
     //kind of defeats the purpose of Monopoly unless it's just two players
@@ -203,20 +236,25 @@ class Person {
     if (inJail) {
       jailHouseRock();
       players.forward();
-      players.getCurrent.turn(0);
-    } else if (initialNumDoubles>=3) {
+      players.getCurrent().turn(); 
+      //may have to reset numDoubles
+    } else if (numDoubles>=3) {
       //send to jail if Person rolls 3 doubles in a row
       goToJail();
       players.forward();
-      players.getCurrent().turn(0);
+      players.getCurrent().turn();
+      //may have to reset numDoubles
     } else {
 
       //roll dice and move
-      int newNumDoubles=initialNumDoubles; //keeps track of # of consecutive doubles a person has rolled
+      ////int newNumDoubles=NumDoubles; //keeps track of # of consecutive doubles a person has rolled
       int roll1=Die.roll();
       int roll2=Die.roll();
       if (roll1==roll2) {
-        newNumDoubles++;
+        numDoubles++;
+        again=true;
+      } else {
+        again=false;
       }
       println(name+" rolled "+roll1+"+"+roll2);
 
@@ -229,7 +267,8 @@ class Person {
       if (sqName.equals("GO TO JAIL")) {
         goToJail();
         players.forward();
-        players.getCurrent().turn(0);
+        players.getCurrent().turn();
+        //may have to reset numDoubles
       } else if (sqName.equals("Community Chest")) {
         communityChest();
       } else if (sqName.equals("Chance")) {
@@ -244,14 +283,15 @@ class Person {
           purchase(currentSquare);
         }
       }
-
+      /*
       //next turn 
-      if (newNumDoubles>initialNumDoubles) { //if doubles were rolled, go again
-        turn(newNumDoubles);
-      } else { //otherwise, go to the next Person
-        players.forward();
-        players.getCurrent().turn(0);
-      }
+       if (newNumDoubles>initialNumDoubles) { //if doubles were rolled, go again
+       turn(newNumDoubles);
+       } else { //otherwise, go to the next Person
+       players.forward();
+       players.getCurrent().turn(0);
+       }
+       */
     }
   }
 
