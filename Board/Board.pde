@@ -598,6 +598,7 @@ void draw() {
 }
 
 void mouseClicked() {
+//  println("Can you roll the dice? "+canRoll);
   if (mouseX<fracLen||mouseX>len-fracLen||mouseY<fracLen||mouseY>len-fracLen) {
     Square cur = squares.getCurrent();
     squares.forward();
@@ -616,6 +617,7 @@ void mouseClicked() {
     }
   }
   else if (canRoll) {
+    //println("the dice can and should be rolled");
     if (mouseX>d1.leftX()&&mouseY>d1.topY()&&mouseX<d1.rightX()&&mouseY<d1.bottomY()) {
       d1.mouseClicked();
     }

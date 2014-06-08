@@ -23,10 +23,13 @@ class Die{
     }
     
     void mouseClicked(){
-      println("dice rolled");
-      players.getCurrent().newTurn();
       canRoll=false;
       setMessage("");
+      println("dice rolled");
+      //println("Can you roll the dice? "+canRoll);
+      players.getCurrent().newTurn();
+//      canRoll=false;
+//      setMessage("");
     }
     
     void draw(){

@@ -364,6 +364,7 @@ class Person {
         forkOverToGovt(currentSquare.getCost());
         canRoll=true;
         setMessage("Roll the dice");
+        //println("Can you roll the dice? "+canRoll);
       } else if (sqName.equals("Luxury Tax")) {
         forkOverToGovt(currentSquare.getCost());
       } else {
