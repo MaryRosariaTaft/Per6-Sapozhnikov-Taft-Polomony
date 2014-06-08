@@ -117,8 +117,10 @@ class Card{
     }
 
     void regAct(Person p){
+        //p.printSquares();
 	p.addMoney(value);
 	p.moveTo(moveTo);
+//println("in card: "+squares);
     }
   
     //if unowned, can be bought
@@ -128,8 +130,8 @@ class Card{
 	    p.move();
 	}
         if(p.getCurrentSquare().hasOwner()){
-          int roll1=Die.roll();
-          int roll2=Die.roll();
+          int roll1=d1.roll();
+          int roll2=d2.roll();
           p.pay(p.getCurrentSquare().getOwner(),10*(roll1+roll2));
         }else{
           p.purchase(p.getCurrentSquare());
@@ -171,6 +173,10 @@ class Card{
   
     int getType(){
       return type;
+    }
+    
+    String toString(){
+      return text;
     }
 
 }

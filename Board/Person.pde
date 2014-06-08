@@ -29,37 +29,40 @@ class Person {
 
   Person() {
   }
-  
-//  void initSquares(LL<Square> s){
-//   Square current=s.getCurrent();
-//   s.forward();
-//   Square temp=s.getCurrent();
-//   while(temp!=current){
-//    sq 
-//   }
-//  }
+
+  //  void initSquares(LL<Square> s){
+  //   Square current=s.getCurrent();
+  //   s.forward();
+  //   Square temp=s.getCurrent();
+  //   while(temp!=current){
+  //    sq 
+  //   }
+  //  }
 
   Person(String name, LL<Square> squares, PImage token, int quadrant) {
     this.squares=new LL<Square>();
     Square cur = squares.getCurrent();
     squares.forward();
     Square tmp = squares.getCurrent();
-    while(tmp!=cur){
+    while (tmp!=cur) {
       this.squares.add(tmp);
       squares.forward();
       tmp = squares.getCurrent();
     }
+    this.squares.add(tmp);
     //this.squares.forward();
     currentSquare=squares.getCurrent(); //"GO"
     this.name=name;
-    money=1500;//1500;
+    money=1300;//1500;
     inJail=false;
     ownedSquares=new LL<Square>();
     this.token=token;
     this.quadrant=quadrant;
     chanceGOOJF=null;
     chestGOOJF=null;
-    again=false;
+    again=true;
+
+    //println(squares);
   }
 
   int numHouses() {
@@ -103,13 +106,31 @@ class Person {
     squares.back();
   }
 
+  //  void delay(){
+  //    double time=millis();
+  //    while(millis()-time<500){
+  //      //nothing
+  //      //wait
+  //      //the grass is growing
+  //      //the paint is drying
+  //      //MaryBrian's brains is dying
+  //    }
+  //  }
+
   void move() {
     if (currentSquare.getName().equals("GO")&&!inJail) {
       money+=200;
     }
+    //int i=0;
+    //    while(i!=1000000000){
+    //      i++;
+    //    }
+    //delay();
     squares.forward();
     currentSquare=squares.getCurrent();
     //println(name+"("+currentSquare.getX()+", "+currentSquare.getY()+")");
+    //if(millis()-lastTime>5000)
+    draw();
   }
 
   void move(int n) {
@@ -119,9 +140,25 @@ class Person {
   }
 
   void moveTo(Square target) {
-    while (squares.getCurrent () != target) {
-      move();
+    // Square tmp = squares.getCurrent();
+    //println(target.getName());
+    if (target==null) {
+      return;
     }
+    //println(squares);
+    //println("found: "+squares.find(target.getName()));
+    if (squares.find(target.getName())==null) {
+      println("no target found");
+      return;
+    }
+
+    //currentSquare=target;
+    while (currentSquare != target) {
+      //println(currentSquare.toString());
+      move();
+      // tmp = squares.getCurrent();
+    }
+    println("done while-looping");
   }
 
   void goToJail() {
@@ -159,8 +196,8 @@ class Person {
       //temporary (maybe)
 
       //roll your way out of jail
-      int roll1=Die.roll();
-      int roll2=Die.roll();
+      int roll1=d1.roll();
+      int roll2=d2.roll();
       if (roll1==roll2) {
         inJail=false;
       }
@@ -176,17 +213,23 @@ class Person {
   }
 
   void chance() {
-    //println("landed on ch");
+    println("landed on chance: "+Chance.getCurrent());
     Chance.getCurrent().act(this);
     Chance.forward();
-    newTurn();
+    //newTurn();
+    canRoll=true;
+    setMessage("Roll the dice");
+    println("chance method finished");
   }
 
   void communityChest() {
-    //println("landed on cc");
+    println("landed on cc: "+CommunityChest.getCurrent());
     CommunityChest.getCurrent().act(this);
     CommunityChest.forward();
-    newTurn();
+    //newTurn();
+    canRoll=true;
+    setMessage("Roll the dice");
+    println("communityChest method finished");
   }
 
   //used to ask Person whether he wants to buy the Square he landed on if he can afford it
@@ -208,7 +251,9 @@ class Person {
                 ;
     } else {
       println("you can't afford this"); //or something like that
-      newTurn();
+      //newTurn();    
+      canRoll=true;
+      setMessage("Roll the dice");
       //maybe we could display it with cp5's messages instead
     }
     //if(money>=currentSquare.getCost()){
@@ -229,7 +274,15 @@ class Person {
     //}
   }
 
+  public void forkOverToGovt(int dough) {
+    addMoney(0-dough);
+    canRoll=true;
+    setMessage("Roll the dice");
+  }
+
   public void newTurn() {
+    //printSquares();
+    println(name+" has $"+money);
     if (again) { //if doubles were rolled, go again
       turn();
     } else { //otherwise, go to the next Person
@@ -240,7 +293,7 @@ class Person {
 
 
   void turn() {
-
+    //printSquares();
     //as of now, game terminates when one person goes bankrupt
     //kind of defeats the purpose of Monopoly unless it's just two players
     //we'll work on that
@@ -271,8 +324,8 @@ class Person {
 
       //roll dice and move
       ////int newNumDoubles=NumDoubles; //keeps track of # of consecutive doubles a person has rolled
-      int roll1=Die.roll();
-      int roll2=Die.roll();
+      int roll1=d1.roll();
+      int roll2=d2.roll();
       if (roll1==roll2) {
         numDoubles++;
         again=true;
@@ -282,8 +335,8 @@ class Person {
       println(name+" rolled "+roll1+"+"+roll2);
 
       //otherwise, move roll1+roll2 Squares
-      //move(roll1+roll2);
-      move(7);//testtesttest
+      move(roll1+roll2);
+      //move(7);//testtesttest
 
       //handle actions depending on which Square this Person lands on
       //we can move some of this code into a separate function to make it cleaner
@@ -292,18 +345,26 @@ class Person {
         goToJail();
         players.forward();
         players.getCurrent().turn();
-        //may have to reset numDoubles
-      } else if(sqName.equals("IN JAIL")||sqName.equals("FREE PARKING")){
-        //do nothing
+        numDoubles=0;
+      } else if (sqName.equals("IN JAIL")||sqName.equals("FREE PARKING")) {
+        //newTurn();
+        canRoll=true;
+        setMessage("Roll the dice");
       } else if (sqName.equals("Community Chest")) {
         communityChest();
       } else if (sqName.equals("Chance")) {
         chance();
+      } else if (sqName.equals("Income Tax")) {
+        forkOverToGovt(currentSquare.getCost());
+      } else if (sqName.equals("Luxury Tax")) {
+        forkOverToGovt(currentSquare.getCost());
       } else {
         if (currentSquare.hasOwner()) {
           //pay rent
           pay(currentSquare.getOwner(), currentSquare.rent());
-          newTurn();
+          //newTurn();
+          canRoll=true;
+          setMessage("Roll the dice");
         } else {
           //ask Person if he wants to buy currentSquare
           //doesn't work yet
@@ -377,6 +438,9 @@ class Person {
   }
   Square getCurrentSquare() {
     return currentSquare;
+  }
+  void printSquares() {
+    println(squares);
   }
   public String toString() {
     return name;

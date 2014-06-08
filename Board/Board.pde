@@ -16,12 +16,17 @@ class myColor {
   }
 }
 
+//we should put sizes in terms of this variable
+private int len = 550;
+
+private Die d1, d2;
 private ControlP5 cp5;
 private Textlabel messages;
 private int time=0;
 private PFont font = createFont("arial", 20);
 private boolean ready=false;//this doesn't do anything yet
 private boolean loaded=false;
+private boolean canRoll=false;
 private int numPlayers;
 private int maxPlayers=4;
 private LL<Square> squares=new LL<Square>();
@@ -31,6 +36,8 @@ private LL<Card> CommunityChest=new LL<Card>();
 
 private boolean usedYes = false;
 private boolean usedNo = false;
+
+private long lastTime=0;
 
 void controlEvent(ControlEvent e) {
   if (e.isAssignableFrom(Textfield.class)) {
@@ -61,7 +68,9 @@ public void yes(int n) {
   p.getCurrentSquare().setOwner(p);
   cp5.remove("yes");
   cp5.remove("no");
-  p.newTurn();
+  //p.newTurn();
+  canRoll=true;
+  setMessage("Roll the dice");
 }
 public void no(int n) {
   Person p = players.getCurrent();
@@ -72,7 +81,9 @@ public void no(int n) {
   println("No clicked");
   cp5.remove("yes");
   cp5.remove("no");
-  p.newTurn();
+  //p.newTurn();
+  canRoll=true;
+  setMessage("Roll the dice");
 }
 
 public void enter2(int numP) {
@@ -100,7 +111,9 @@ public void enter2(int numP) {
     cp5.remove("messages");
     fill(150);
     ready=true;//doesn't do anything (yet?)
-    players.getCurrent().turn();
+    //players.getCurrent().printSquares();
+    canRoll=true;
+    setMessage("Roll the dice");
   }
   loaded=true;
 }
@@ -157,14 +170,26 @@ public void input(String s) {
   println("input("+s+") called");
 }
 
+public void setMessage(String s) {
+  cp5.remove("messages");
+  messages = cp5.addTextlabel("messages")
+    .setText(s)
+      .setPosition(75, 75)
+        .setFont(font)
+          ;
+}
+
 void setup() {
+
+  lastTime=millis();
 
   size(550, 550);
 
   //////////////////////////////////////////////////
 
   //SETTING UP CONTROLP5
-
+  d1 = new Die(len/2+10, len/2);
+  d2 = new Die(len/2-10, len/2);
   //init ControlP5
   cp5 = new ControlP5(this);
 
@@ -285,7 +310,7 @@ void setup() {
   names.add("Indiana Avenue");
   names.add("Illinois Avenue");
   names.add("B&O Railroad");
-  names.add("Atlantic Avnue");
+  names.add("Atlantic Avenue");
   names.add("Ventnor Avenue");
   names.add("Water Works");
   names.add("Marvin Gardens");
@@ -465,6 +490,10 @@ void setup() {
   //thanks to whoever answered this: https://answers.yahoo.com/question/index?qid=20110528154141AAFwRyu
 
   //if a card calls for money to be collected or given away, we can use a negative value
+  //println("in setup: "+squares.find(squares.getCurrent().getName()));
+  //println("in setup: "+squares);
+  //println("name"+squares.getCurrent().getName());
+  //Card(int type, String text, int value, boolean outJail, Square move)
   Chance.add(new Card(0, "Advance To GO", 0, false, squares.find("GO")));//200?
   Chance.add(new Card(0, "Advance To Illinois Avenue", 0, false, squares.find("Illinois Avenue")));
   Chance.add(new Card(1)); //Advance token to nearest Utility. If unowned, you may buy it from the Bank.  If owned, throw dice and pay owner a total ten times the amount thrown. 
@@ -501,10 +530,12 @@ void setup() {
   CommunityChest.add(new Card(1, "You inherit $100", 100, false, null));
   CommunityChest.add(new Card(1, "From sale of stock you get $50", 50, false, null));
   CommunityChest.add(new Card(1, "Holiday Fund matures - Receive $100", 100, false, null));
+
+  Chance.forward();
 }
 
 void draw() {
-  time=millis();//not working yet
+  lastTime=millis();//not working yet
   background(150);
   for (int i=0; i<squares.getLength (); i++) {
     squares.getCurrent().draw();
@@ -513,6 +544,20 @@ void draw() {
   for (int i=0; i<players.getLength (); i++) {
     players.getCurrent().draw();
     players.forward();
+  }
+  d1.draw();
+  d2.draw();
+}
+
+void mouseClicked() {
+  if (!canRoll) {
+    return;
+  }
+  if (mouseX>d1.leftX()&&mouseY>d1.topY()&&mouseX<d1.rightX()&&mouseY<d1.bottomY()) {
+    d1.mouseClicked();
+  }
+  if (mouseX>d2.leftX()&&mouseY>d2.topY()&&mouseX<d2.rightX()&&mouseY<d2.bottomY()) {
+    d2.mouseClicked();
   }
 }
 
