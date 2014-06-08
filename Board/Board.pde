@@ -415,6 +415,8 @@ void setup() {
       img = loadImage("Squares/Go.jpg");
     } else if (i==8) {
       img = loadImage("Squares/CommunityChestUpright.jpg");
+    } else if (i==6) {
+      img = loadImage("Squares/Tax.jpg");
     } else if (i==5) {
       img = loadImage("Squares/RRUpright.jpg");
     } else if (i==3) {
