@@ -34,7 +34,7 @@ class Die{
       rect(x,y,20,20,7);
       if (roll!=0){
         fill(#0000FF);
-        text(roll,x+s/2,y+s/2);
+        text(roll,x+s/2-5,y+s/2+5);
       }
     }
     

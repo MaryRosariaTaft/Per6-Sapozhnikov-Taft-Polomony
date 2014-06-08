@@ -81,12 +81,16 @@ public void no(int n) {
     return;
   }
   println("No clicked");
-  cp5.remove("yes");
-  cp5.remove("no");
+  for (int i=0; i<1000; i++) {
+  }
+  //  cp5.remove("no");
+  //  cp5.remove("yes");
+  setMessage("ignore the buttons which haven't been removed");
   //p.newTurn();
   canRoll=true;
   setMessage("Roll the dice");
 }
+
 
 public void enter2(int numP) {
   if (loaded) {
@@ -99,7 +103,7 @@ public void enter2(int numP) {
       else if (i==1) token=loadImage("Tokens/Dog.jpg");
       else if (i==2) token=loadImage("Tokens/Ship.jpg");
       else if (i==3) token=loadImage("Tokens/Thimble.jpg");
-      token.resize(fracLen/2,fracLen/2);
+      token.resize(fracLen/2, fracLen/2);
       Person p = new Person(name, squares, token, i+1);
       players.add(p);
     }
@@ -132,11 +136,11 @@ public void enter(int x) {
     if (numP>1 && numP<=maxPlayers) {
       /*
       messages = cp5.addTextlabel("messages")
-        .setText("Enter players' names")
-          .setPosition(200, 50)
-            .setFont(font)
-              ;
-      */
+       .setText("Enter players' names")
+       .setPosition(200, 50)
+       .setFont(font)
+       ;
+       */
       setMessage("Enter players' names");
       cp5.remove("Enter Number of Players (2-4)");//and this?
       numPlayers = numP;
@@ -162,12 +166,12 @@ public void enter(int x) {
     } else {
       /*
       messages = cp5.addTextlabel("messages")
-        //.setText("Number of players: "+numP)
-        .setText("Please enter a valid number of players")
-          .setPosition(75, 75)
-            .setFont(font)
-              ;
-      */
+       //.setText("Number of players: "+numP)
+       .setText("Please enter a valid number of players")
+       .setPosition(75, 75)
+       .setFont(font)
+       ;
+       */
       setMessage("Please enter a valid number of players");
     }
   } 
@@ -175,6 +179,13 @@ public void enter(int x) {
     messages.setText("Please enter a valid number of players");
   }
 }
+
+public void build(){
+  Person p = players.getCurrent();
+  Square s = p.getCurrentSquare();
+  s.build();
+}
+
 public void input(String s) {
   println("input("+s+") called");
 }
@@ -182,30 +193,30 @@ public void input(String s) {
 public void setMessage(String s) {
   /*
   cp5.remove("messages");
-  messages = cp5.addTextlabel("messages")
-    .setText(s)
-      .setPosition(75, 75)
-        .setFont(font)
-          ;
-  */
+   messages = cp5.addTextlabel("messages")
+   .setText(s)
+   .setPosition(75, 75)
+   .setFont(font)
+   ;
+   */
   /*
   fill(#0000ff);
-  text(s,len+2*fracLen+30,2*fracLen+30);
-  */
+   text(s,len+2*fracLen+30,2*fracLen+30);
+   */
   println(s);
   this.s = s;
   fill(#0000FF);
-  textFont(font,16);
+  textFont(font, 16);
   //stroke(#0000FF);
-  
-  text(s,len+2*fracLen+30,2*fracLen+30);
+
+  text(s, len+2*fracLen+30, 2*fracLen+30);
 }
 
 void setup() {
 
   lastTime=millis();
 
-  size(len,len);
+  size(len, len);
 
   //////////////////////////////////////////////////
 
@@ -235,11 +246,11 @@ void setup() {
   //invalid input, or other stuff the user should know
   /*
   messages = cp5.addTextlabel("messages")
-    .setText("")
-      .setPosition(75, 75)
-        .setFont(font)
-          ;
-  */
+   .setText("")
+   .setPosition(75, 75)
+   .setFont(font)
+   ;
+   */
   setMessage("");
   //////////////////////////////////////////////////
 
@@ -247,7 +258,7 @@ void setup() {
 
   //big thanks to http://en.wikipedia.org/wiki/Template:Monopoly_board_layout
 
-    //prepare Squares' colors
+  //prepare Squares' colors
 
   myColor other = new myColor(#FFFFFF);
   myColor rr = new myColor(#000000);
@@ -321,7 +332,7 @@ void setup() {
   names.add("IN JAIL");
   names.add("St. Charles Place");
   names.add("Electric Company");
-  names.add("Staties Avenue");
+  names.add("States Avenue");
   names.add("Virginia Avenue");
   names.add("Pennsylvania Railroad");
   names.add("St. James Place");
@@ -424,7 +435,7 @@ void setup() {
     }
     //create Square with either a color or an image
     if (img!=null) {
-      img.resize(fracLen,fracLen);
+      img.resize(fracLen, fracLen);
       squares.add(new Square(i*(fracLen), len-(fracLen), fracLen, fracLen, img, n, cst));
     } else {
       squares.add(new Square(i*(fracLen), len-(fracLen), fracLen, fracLen, c, n, cst));
@@ -448,7 +459,7 @@ void setup() {
       img = loadImage("Squares/CommunityChestLeft.jpg");
     }
     if (img!=null) {
-      img.resize(fracLen,fracLen);
+      img.resize(fracLen, fracLen);
       squares.add(new Square(0, i*fracLen, fracLen, fracLen, img, n, cst));
     } else {
       squares.add(new Square(0, i*fracLen, fracLen, fracLen, c, n, cst));
@@ -472,7 +483,7 @@ void setup() {
       img = loadImage("Squares/WaterWorks.jpg");
     }
     if (img!=null) {
-      img.resize(fracLen,fracLen);
+      img.resize(fracLen, fracLen);
       squares.add(new Square(i*fracLen, 0, fracLen, fracLen, img, n, cst));
     } else {
       squares.add(new Square(i*fracLen, 0, fracLen, fracLen, c, n, cst));
@@ -498,7 +509,7 @@ void setup() {
       img = loadImage("Squares/IncomeTax.jpg");
     }
     if (img!=null) {
-      img.resize(fracLen,fracLen);
+      img.resize(fracLen, fracLen);
       squares.add(new Square(len-fracLen, i*fracLen, fracLen, fracLen, img, n, cst));
     } else {
       squares.add(new Square(len-fracLen, i*fracLen, fracLen, fracLen, c, n, cst));
@@ -577,24 +588,40 @@ void draw() {
   }
   d1.draw();
   d2.draw();
-  
+
   fill(#0000FF);
-  textFont(font,16);
+  textFont(font, 16);
   //stroke(#0000FF);
-  
-  text(s,len+2*fracLen+30,2*fracLen+30);
+
+  text(s, len+2*fracLen+30, 2*fracLen+30);
   //messages.draw(this);
 }
 
 void mouseClicked() {
-  if (!canRoll) {
-    return;
+  if (mouseX<fracLen||mouseX>len-fracLen||mouseY<fracLen||mouseY>len-fracLen) {
+    Square cur = squares.getCurrent();
+    squares.forward();
+    Square tmp = squares.getCurrent();
+    while (tmp!=cur) {
+      if (tmp.onSquare(mouseX, mouseY)) {
+        tmp.mouseClicked();
+        //return;
+      }
+      squares.forward();
+      tmp = squares.getCurrent();
+    }
+    if (tmp.onSquare(mouseX, mouseY)) {
+      tmp.mouseClicked();
+      //return;
+    }
   }
-  if (mouseX>d1.leftX()&&mouseY>d1.topY()&&mouseX<d1.rightX()&&mouseY<d1.bottomY()) {
-    d1.mouseClicked();
-  }
-  if (mouseX>d2.leftX()&&mouseY>d2.topY()&&mouseX<d2.rightX()&&mouseY<d2.bottomY()) {
-    d2.mouseClicked();
+  else if (canRoll) {
+    if (mouseX>d1.leftX()&&mouseY>d1.topY()&&mouseX<d1.rightX()&&mouseY<d1.bottomY()) {
+      d1.mouseClicked();
+    }
+    if (mouseX>d2.leftX()&&mouseY>d2.topY()&&mouseX<d2.rightX()&&mouseY<d2.bottomY()) {
+      d2.mouseClicked();
+    }
   }
 }
 

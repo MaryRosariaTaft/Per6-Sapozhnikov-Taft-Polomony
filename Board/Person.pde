@@ -61,6 +61,11 @@ class Person {
     chanceGOOJF=null;
     chestGOOJF=null;
     again=true;
+    while(currentSquare!=squares.find("GO")){
+      squares.forward();
+      currentSquare=squares.getCurrent();
+    }
+    
 
     //println(squares);
   }
@@ -337,7 +342,7 @@ class Person {
 
       //otherwise, move roll1+roll2 Squares
       move(roll1+roll2);
-      //move(7);//testtesttest
+      //move(4);//testtesttest
 
       //handle actions depending on which Square this Person lands on
       //we can move some of this code into a separate function to make it cleaner
@@ -357,6 +362,8 @@ class Person {
         chance();
       } else if (sqName.equals("Income Tax")) {
         forkOverToGovt(currentSquare.getCost());
+        canRoll=true;
+        setMessage("Roll the dice");
       } else if (sqName.equals("Luxury Tax")) {
         forkOverToGovt(currentSquare.getCost());
       } else {
@@ -413,6 +420,51 @@ class Person {
       image(token, currentSquare.getX()+fracLen/2, currentSquare.getY()+fracLen/2);
   }
 
+  boolean hasAll(Square s){
+    color target = s.getColor();
+    int need = 0;
+    Square cur = Board.this.squares.getCurrent();
+    Board.this.squares.forward();
+    Square tmp = Board.this.squares.getCurrent();    
+    while(tmp!=cur){
+      if(tmp.getColor()==target){
+        need++;
+      }
+      Board.this.squares.forward();
+      tmp = Board.this.squares.getCurrent();
+    }
+    if(tmp.getColor()==target){
+        need++;
+    }
+    /*
+    Board.this.squares.back();
+    while(tmp!=Board.this.squares.find("GO")){
+      Board.this.squares.forward();
+      tmp = Board.this.squares.getCurrent();
+    }
+    squares.back();
+    while(tmp!=squares.find("GO")){
+      squares.forward();
+      tmp = getCurrent();
+    }
+    */
+    cur = ownedSquares.getCurrent();
+    ownedSquares.forward();
+    tmp = ownedSquares.getCurrent();
+    int have = 0;
+    while(tmp!=cur){
+      if(tmp.getColor()==target){
+        have++;
+      }
+      ownedSquares.forward();
+      tmp = ownedSquares.getCurrent();
+    }
+    if(tmp.getColor()==target){
+        have++;
+    }
+    println("you need "+need+" and you have "+have);
+    return have==need;
+  }
 
   //get methods
 
