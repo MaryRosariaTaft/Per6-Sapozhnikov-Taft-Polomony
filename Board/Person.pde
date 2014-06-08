@@ -7,6 +7,7 @@ class Person {
   private LL<Square> squares; //Squares on the Board
   private LL<Square> ownedSquares;
   private Square currentSquare; //Person's current Square
+  private int numRR;
   private int money;
   private boolean inJail;
   private PImage token;
@@ -56,16 +57,17 @@ class Person {
     money=1300;//1500;
     inJail=false;
     ownedSquares=new LL<Square>();
+    numRR=0;
     this.token=token;
     this.quadrant=quadrant;
     chanceGOOJF=null;
     chestGOOJF=null;
     again=true;
-    while(currentSquare!=squares.find("GO")){
+    while (currentSquare!=squares.find ("GO")) {
       squares.forward();
       currentSquare=squares.getCurrent();
     }
-    
+
 
     //println(squares);
   }
@@ -103,6 +105,9 @@ class Person {
       //IAMPOOREXCEPTION
     } else {
       money-=s.getCost();
+      if(s.isRR()){
+        numRR++;
+      }
       ownedSquares.add(s);
     }
   }
@@ -163,12 +168,12 @@ class Person {
       move();
       // tmp = squares.getCurrent();
     }
-    println("done while-looping");
+    //println("done while-looping");
   }
 
   void goToJail() {
     inJail=true;
-    moveTo(squares.find("GO TO JAIL"));
+    moveTo(squares.find("IN JAIL"));
   }
 
   void jailHouseRock() {
@@ -224,7 +229,7 @@ class Person {
     //newTurn();
     canRoll=true;
     setMessage("Roll the dice");
-    println("chance method finished");
+    //println("chance method finished");
   }
 
   void communityChest() {
@@ -234,7 +239,7 @@ class Person {
     //newTurn();
     canRoll=true;
     setMessage("Roll the dice");
-    println("communityChest method finished");
+    //println("communityChest method finished");
   }
 
   //used to ask Person whether he wants to buy the Square he landed on if he can afford it
@@ -316,14 +321,9 @@ class Person {
     if (inJail) {
       jailHouseRock();
       players.forward();
-      players.getCurrent().turn(); 
-      numDoubles=0;
-      //may have to reset numDoubles
-    } else if (numDoubles>=3) {
-      //send to jail if Person rolls 3 doubles in a row
-      goToJail();
-      players.forward();
-      players.getCurrent().turn();
+      //players.getCurrent().turn();
+      canRoll=true;
+      setMessage("Roll the dice"); 
       numDoubles=0;
       //may have to reset numDoubles
     } else {
@@ -335,10 +335,23 @@ class Person {
       if (roll1==roll2) {
         numDoubles++;
         again=true;
+        if (numDoubles>=3) {
+          setMessage("You have gone three times in a row! How dare you?!?!");
+          //send to jail if Person rolls 3 doubles in a row
+          goToJail();
+          again=false;
+          numDoubles=0;
+          players.forward();
+          canRoll=true;
+          setMessage("Roll the dice");
+          //players.getCurrent().turn();
+          return;
+        }
+        
       } else {
         again=false;
       }
-      println(name+" rolled "+roll1+"+"+roll2);
+      println(name+" rolled "+roll1+" and "+roll2);
 
       //otherwise, move roll1+roll2 Squares
       move(roll1+roll2);
@@ -350,7 +363,9 @@ class Person {
       if (sqName.equals("GO TO JAIL")) {
         goToJail();
         players.forward();
-        players.getCurrent().turn();
+        //players.getCurrent().turn();
+        canRoll=true;
+        setMessage("Roll the dice");
         numDoubles=0;
       } else if (sqName.equals("IN JAIL")||sqName.equals("FREE PARKING")) {
         //newTurn();
@@ -362,8 +377,8 @@ class Person {
         chance();
       } else if (sqName.equals("Income Tax")) {
         forkOverToGovt(currentSquare.getCost());
-        canRoll=true;
-        setMessage("Roll the dice");
+        //canRoll=true;
+        //setMessage("Roll the dice");
         //println("Can you roll the dice? "+canRoll);
       } else if (sqName.equals("Luxury Tax")) {
         forkOverToGovt(currentSquare.getCost());
@@ -421,47 +436,49 @@ class Person {
       image(token, currentSquare.getX()+fracLen/2, currentSquare.getY()+fracLen/2);
   }
 
-  boolean hasAll(Square s){
+  
+
+  boolean hasAll(Square s) {
     color target = s.getColor();
     int need = 0;
     Square cur = Board.this.squares.getCurrent();
     Board.this.squares.forward();
     Square tmp = Board.this.squares.getCurrent();    
-    while(tmp!=cur){
-      if(tmp.getColor()==target){
+    while (tmp!=cur) {
+      if (tmp.getColor()==target) {
         need++;
       }
       Board.this.squares.forward();
       tmp = Board.this.squares.getCurrent();
     }
-    if(tmp.getColor()==target){
-        need++;
+    if (tmp.getColor()==target) {
+      need++;
     }
     /*
     Board.this.squares.back();
-    while(tmp!=Board.this.squares.find("GO")){
-      Board.this.squares.forward();
-      tmp = Board.this.squares.getCurrent();
-    }
-    squares.back();
-    while(tmp!=squares.find("GO")){
-      squares.forward();
-      tmp = getCurrent();
-    }
-    */
+     while(tmp!=Board.this.squares.find("GO")){
+     Board.this.squares.forward();
+     tmp = Board.this.squares.getCurrent();
+     }
+     squares.back();
+     while(tmp!=squares.find("GO")){
+     squares.forward();
+     tmp = getCurrent();
+     }
+     */
     cur = ownedSquares.getCurrent();
     ownedSquares.forward();
     tmp = ownedSquares.getCurrent();
     int have = 0;
-    while(tmp!=cur){
-      if(tmp.getColor()==target){
+    while (tmp!=cur) {
+      if (tmp.getColor()==target) {
         have++;
       }
       ownedSquares.forward();
       tmp = ownedSquares.getCurrent();
     }
-    if(tmp.getColor()==target){
-        have++;
+    if (tmp.getColor()==target) {
+      have++;
     }
     println("you need "+need+" and you have "+have);
     return have==need;
@@ -492,6 +509,9 @@ class Person {
   }
   Square getCurrentSquare() {
     return currentSquare;
+  }
+  int getNumRR(){
+    return numRR;
   }
   void printSquares() {
     println(squares);

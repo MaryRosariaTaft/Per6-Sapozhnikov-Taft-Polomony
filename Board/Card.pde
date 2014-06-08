@@ -33,6 +33,19 @@ class Card{
 	moveTo = move;
     }
     
+    Card(int amtGained, String txt){
+        text=txt;
+        
+//        players.getCurrent().addMoney((numPlayers-1)*amtGained);
+//        Person current=players.getCurrent();
+//        players.forward();
+//        Person p=players.getCurrent();
+//        while(p!=current){
+//          p.addMoney(0-amtGained);
+//          players.forward();
+//        }
+    }
+    
     //use this constructor for special cases:
     Card(int i){
 	switch (i){

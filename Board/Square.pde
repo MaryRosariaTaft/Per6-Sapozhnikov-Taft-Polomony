@@ -61,22 +61,32 @@ class Square {
     }
   }
   int rent(int n){
-    switch(n){
-      case 0:
-        return (cost-60)/10+2;
-        //break;
-      case 1:
-        return (cost-60)*5+10;
-        //break;
-      case 2:
-        return (cost-10)*3+30;
-        //break;
-      case 3:
-        return (cost-30)*3+90;
-        //break;
-      default:
-        return cost+rent(1)+rent(n-1);
+    int ans=0;
+    if(isRR()){
+      ans = 25*Math.pow(2,owner.getNumRR()-1);
+    } else if(isUtil()){
+      //rent is 6 times a random dice roll
+      ans = (int)(Math.random()*60)+12;
+    } else{
+      switch(n){
+        case 0:
+          ans = (cost-60)/10+2;
+          //break;
+        case 1:
+          ans = (cost-60)*5+10;
+          //break;
+        case 2:
+          ans = (cost-10)*3+30;
+          //break;
+        case 3:
+          ans = (cost-30)*3+90;
+          //break;
+        default:
+          ans = cost+rent(1)+rent(n-1);
+      }
     }
+    println("The rent is "+ans);
+    return ans;
   }
 
   void build(){
