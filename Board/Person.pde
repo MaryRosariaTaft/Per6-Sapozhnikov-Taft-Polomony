@@ -405,11 +405,11 @@ class Person {
     if (quadrant==1)
       image(token, currentSquare.getX(), currentSquare.getY());
     else if (quadrant==2)
-      image(token, currentSquare.getX()+25, currentSquare.getY());
+      image(token, currentSquare.getX()+fracLen/2, currentSquare.getY());
     else if (quadrant==3)
-      image(token, currentSquare.getX(), currentSquare.getY()+25);
+      image(token, currentSquare.getX(), currentSquare.getY()+fracLen/2);
     else
-      image(token, currentSquare.getX()+25, currentSquare.getY()+25);
+      image(token, currentSquare.getX()+fracLen/2, currentSquare.getY()+fracLen/2);
   }
 
 

@@ -17,7 +17,8 @@ class myColor {
 }
 
 //we should put sizes in terms of this variable
-private int len = 550;
+private int len = 650;
+private int fracLen=len/11;
 
 private Die d1, d2;
 private ControlP5 cp5;
@@ -97,6 +98,7 @@ public void enter2(int numP) {
       else if (i==1) token=loadImage("Tokens/Dog.jpg");
       else if (i==2) token=loadImage("Tokens/Ship.jpg");
       else if (i==3) token=loadImage("Tokens/Thimble.jpg");
+      token.resize(fracLen/2,fracLen/2);
       Person p = new Person(name, squares, token, i+1);
       players.add(p);
     }
@@ -183,7 +185,7 @@ void setup() {
 
   lastTime=millis();
 
-  size(550, 550);
+  size(len,len);
 
   //////////////////////////////////////////////////
 
@@ -398,9 +400,10 @@ void setup() {
     }
     //create Square with either a color or an image
     if (img!=null) {
-      squares.add(new Square(i*50, 500, 50, 50, img, n, cst));
+      img.resize(fracLen,fracLen);
+      squares.add(new Square(i*(fracLen), len-(fracLen), fracLen, fracLen, img, n, cst));
     } else {
-      squares.add(new Square(i*50, 500, 50, 50, c, n, cst));
+      squares.add(new Square(i*(fracLen), len-(fracLen), fracLen, fracLen, c, n, cst));
     }
   }
   for (int i=10; i>0; i--) {
@@ -421,9 +424,10 @@ void setup() {
       img = loadImage("Squares/CommunityChestLeft.jpg");
     }
     if (img!=null) {
-      squares.add(new Square(0, i*50, 50, 50, img, n, cst));
+      img.resize(fracLen,fracLen);
+      squares.add(new Square(0, i*fracLen, fracLen, fracLen, img, n, cst));
     } else {
-      squares.add(new Square(0, i*50, 50, 50, c, n, cst));
+      squares.add(new Square(0, i*fracLen, fracLen, fracLen, c, n, cst));
     }
   }
   for (int i=0; i<10; i++) {
@@ -444,9 +448,10 @@ void setup() {
       img = loadImage("Squares/WaterWorks.jpg");
     }
     if (img!=null) {
-      squares.add(new Square(i*50, 0, 50, 50, img, n, cst));
+      img.resize(fracLen,fracLen);
+      squares.add(new Square(i*fracLen, 0, fracLen, fracLen, img, n, cst));
     } else {
-      squares.add(new Square(i*50, 0, 50, 50, c, n, cst));
+      squares.add(new Square(i*fracLen, 0, fracLen, fracLen, c, n, cst));
     }
   }
   for (int i=0; i<10; i++) {
@@ -469,9 +474,10 @@ void setup() {
       img = loadImage("Squares/IncomeTax.jpg");
     }
     if (img!=null) {
-      squares.add(new Square(500, i*50, 50, 50, img, n, cst));
+      img.resize(fracLen,fracLen);
+      squares.add(new Square(len-fracLen, i*fracLen, fracLen, fracLen, img, n, cst));
     } else {
-      squares.add(new Square(500, i*50, 50, 50, c, n, cst));
+      squares.add(new Square(len-fracLen, i*fracLen, fracLen, fracLen, c, n, cst));
     }
   }
 
