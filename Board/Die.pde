@@ -3,6 +3,7 @@ import java.util.*;
 
 class Die{
     int x,y,s,r;
+    int roll;
     
     Die(){
 
@@ -16,19 +17,25 @@ class Die{
 
     public int roll(){
 	Random r=new Random();
-	return r.nextInt(6)+1;
+	roll = r.nextInt(6)+1;
+        draw();
+        return roll;
     }
     
     void mouseClicked(){
       println("dice rolled");
       players.getCurrent().newTurn();
       canRoll=false;
-      cp5.remove("messages");
+      setMessage("");
     }
     
     void draw(){
       fill(#FFFFFF);
       rect(x,y,20,20,7);
+      if (roll!=0){
+        fill(#0000FF);
+        text(roll,x+s/2,y+s/2);
+      }
     }
     
     public int leftX(){return x;}

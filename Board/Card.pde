@@ -117,10 +117,8 @@ class Card{
     }
 
     void regAct(Person p){
-        //p.printSquares();
 	p.addMoney(value);
 	p.moveTo(moveTo);
-//println("in card: "+squares);
     }
   
     //if unowned, can be bought

@@ -235,6 +235,7 @@ class Person {
   //used to ask Person whether he wants to buy the Square he landed on if he can afford it
   void purchase(Square s) {
     if (money>=currentSquare.getCost()) {
+      setMessage("Would you like to buy "+currentSquare.getName()+"?");
       usedYes = false;
       cp5.addButton("yes")
         .setPosition(350, 400)

@@ -17,12 +17,13 @@ class myColor {
 }
 
 //we should put sizes in terms of this variable
-private int len = 650;
+private int len = 550; //should be divisible by 11
 private int fracLen=len/11;
 
 private Die d1, d2;
 private ControlP5 cp5;
 private Textlabel messages;
+private String s="";
 private int time=0;
 private PFont font = createFont("arial", 20);
 private boolean ready=false;//this doesn't do anything yet
@@ -129,11 +130,14 @@ public void enter(int x) {
     //what exactly does the above line do?
     //(I just don't see where messages was ever "added" or something in the first place)
     if (numP>1 && numP<=maxPlayers) {
+      /*
       messages = cp5.addTextlabel("messages")
         .setText("Enter players' names")
           .setPosition(200, 50)
             .setFont(font)
               ;
+      */
+      setMessage("Enter players' names");
       cp5.remove("Enter Number of Players (2-4)");//and this?
       numPlayers = numP;
       background(150);
@@ -156,12 +160,15 @@ public void enter(int x) {
               .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
                 ;
     } else {
+      /*
       messages = cp5.addTextlabel("messages")
         //.setText("Number of players: "+numP)
         .setText("Please enter a valid number of players")
           .setPosition(75, 75)
             .setFont(font)
               ;
+      */
+      setMessage("Please enter a valid number of players");
     }
   } 
   catch(Exception e) {
@@ -173,12 +180,25 @@ public void input(String s) {
 }
 
 public void setMessage(String s) {
+  /*
   cp5.remove("messages");
   messages = cp5.addTextlabel("messages")
     .setText(s)
       .setPosition(75, 75)
         .setFont(font)
           ;
+  */
+  /*
+  fill(#0000ff);
+  text(s,len+2*fracLen+30,2*fracLen+30);
+  */
+  println(s);
+  this.s = s;
+  fill(#0000FF);
+  textFont(font,16);
+  //stroke(#0000FF);
+  
+  text(s,len+2*fracLen+30,2*fracLen+30);
 }
 
 void setup() {
@@ -213,12 +233,14 @@ void setup() {
 
   //stuff to be printed out in case the user enters
   //invalid input, or other stuff the user should know
+  /*
   messages = cp5.addTextlabel("messages")
     .setText("")
       .setPosition(75, 75)
         .setFont(font)
           ;
-
+  */
+  setMessage("");
   //////////////////////////////////////////////////
 
   //SETTING UP PLAYING BOARD
@@ -553,6 +575,13 @@ void draw() {
   }
   d1.draw();
   d2.draw();
+  
+  fill(#0000FF);
+  textFont(font,16);
+  //stroke(#0000FF);
+  
+  text(s,len+2*fracLen+30,2*fracLen+30);
+  //messages.draw(this);
 }
 
 void mouseClicked() {
