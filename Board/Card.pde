@@ -156,7 +156,9 @@ class Card{
 	p.addCard(Chance.remove());
     }
     void getOutChestAct(Person p){
-	p.addCard(CommunityChest.remove());
+        Card c = CommunityChest.remove();
+        //println(c);
+	p.addCard(c);
     }
     void houseRepairsAct(Person p){
 	int n = (p.numHouses()*25)+(p.numHotels()*100);

@@ -1,4 +1,4 @@
-//When I started writing this code, only God and I knew what I was doing
+//When we started writing this code, only God and we knew what we were doing
 //Now, only God knows
 
 import java.io.*;
@@ -63,7 +63,7 @@ public void yes(int n) {
 
 
   //println("yes clicked");
-
+  println(p.getName()+" now has $"+p.getMoney());
   p.buy(p.getCurrentSquare());
   p.getCurrentSquare().setOwner(p);
   cp5.remove("yes");
@@ -491,9 +491,10 @@ void setup() {
   Chance.add(new Card(0)); //Advance token to the nearest Railroad and pay owner twice the rental to which he/she is otherwise entitled.  If Railroad is unowned, you may buy it from the Bank. (There are two of these.) 
   Chance.add(new Card(0, "Advance To St. Charles", 0, false, squares.find("St. Charles Place")));
   Chance.add(new Card(0, "Bank pays you dividend of $50", 50, false, null));
-  Chance.add(new Card(3)); //Get out of Jail free – this card may be kept until needed, or traded/sold 
+  //glitchy:
+  //Chance.add(new Card(3)); //Get out of Jail free – this card may be kept until needed, or traded/sold 
   Chance.add(new Card(2)); //Go back 3 spaces 
-  Chance.add(new Card(0, "Go directly to Jail – do not pass Go, do not collect $200", 0, true, null));
+  Chance.add(new Card(0, "Go directly to Jail – do not pass Go, do not collect $200", 0, false, squares.find("IN JAIL")));
   Chance.add(new Card(5)); //Make general repairs on all your property – for each house pay $25 – for each hotel $100 
   Chance.add(new Card(0, "Pay poor tax of $15", -15, false, null));
   Chance.add(new Card(0, "Take a trip to Reading Railroad", 0, false, squares.find("Reading Railroad")));
@@ -502,11 +503,12 @@ void setup() {
   Chance.add(new Card(0, "Your building loan matures – collect $150", 150, false, null));
   Chance.add(new Card(0, "You have won a crossword competition - collect $100", 100, false, null));  
 
-//  CommunityChest.add(new Card(1, "Advance To GO", 0, false, squares.find("GO")));//200?
-//  CommunityChest.add(new Card(1, "Bank error in your favor – collect $75", 75, false, null));
-//  CommunityChest.add(new Card(1, "Doctor's fees – Pay $50", -50, false, null));
-  CommunityChest.add(new Card(4)); //Get out of jail free – this card may be kept until needed, or sold 
-  CommunityChest.add(new Card(1, "Go directly to Jail – do not pass Go, do not collect $200", 0, true, null));
+  CommunityChest.add(new Card(1, "Advance To GO", 0, false, squares.find("GO")));//200?
+  CommunityChest.add(new Card(1, "Bank error in your favor – collect $75", 75, false, null));
+  CommunityChest.add(new Card(1, "Doctor's fees – Pay $50", -50, false, null));
+  //also glitchy:
+  //CommunityChest.add(new Card(4)); //Get out of jail free – this card may be kept until needed, or sold 
+  CommunityChest.add(new Card(1, "Go directly to Jail – do not pass Go, do not collect $200", 0, false, squares.find("IN JAIL")));
   CommunityChest.add(new Card(1, "It is your birthday. The government has decided to waste debt on you, collect $10 for every player", (numPlayers-1)*10, false, null));
   CommunityChest.add(new Card(1, "Grand Opera Night – the opera house gives you $50 from every player for opening night seats", (numPlayers-1)*50, false, null));
   CommunityChest.add(new Card(1, "Income Tax refund – collect $20", 20, false, null));
@@ -518,14 +520,18 @@ void setup() {
   CommunityChest.add(new Card(1, "You inherit $100", 100, false, null));
   CommunityChest.add(new Card(1, "From sale of stock you get $50", 50, false, null));
   CommunityChest.add(new Card(1, "Holiday Fund matures - Receive $100", 100, false, null));
+  
+  CommunityChest.forward();
 
   Chance.forward();
+  
+  
 }
 
 void draw() {
   
   lastTime=millis();//not working yet
-  background(150);
+  background(200);
   for (int i=0; i<squares.getLength (); i++) {
     squares.getCurrent().draw();
     squares.forward();
@@ -538,9 +544,9 @@ void draw() {
   d1.draw();
   d2.draw();
 
-  fill(#0000FF);
-  textFont(font, 16);
-  text(s, len+2*fracLen+30, 2*fracLen+30);
+  noFill();
+  rect(fracLen,fracLen,len-2*fracLen,len-2*fracLen);
+
 }
 
 void mouseClicked() {

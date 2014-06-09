@@ -144,6 +144,9 @@ class Person {
       println("no target found");
       return;
     }
+    if(target.getName().equals("IN JAIL")){
+      inJail=true;
+    }
     while (currentSquare != target) {
       move();
     }
@@ -163,14 +166,17 @@ class Person {
     //so basically you have to get out of jail one way or another, unless you're broke
 
     //cards ahoy
+    println(chestGOOJF);
     if (chanceGOOJF!=null) {
       inJail=false;
       Chance.add(chanceGOOJF);
       chanceGOOJF=null;
+      println(name+" got out of jail with Card");
     } else if (chestGOOJF!=null) {
       inJail=false;
       CommunityChest.add(chestGOOJF);
       chestGOOJF=null;
+      println(name+" got out of jail with Card");
     } else {
 
       //roll your way out of jail
@@ -239,7 +245,6 @@ class Person {
   }
 
   public void newTurn() {
-    println(name+" has $"+money);
     if (again) { //if doubles were rolled, go again
       turn();
     } else { //otherwise, go to the next Person
@@ -250,7 +255,7 @@ class Person {
 
 
   void turn() {
-
+    println(name+"has "+chestGOOJF);
     //game terminates when one person goes bankrupt
 
     if (money<=0) {
@@ -262,11 +267,11 @@ class Person {
     if (inJail) {
       jailHouseRock();
       players.forward();
-      //players.getCurrent().turn();
       canRoll=true;
       setMessage("Roll the dice"); 
       numDoubles=0;
-      //may have to reset numDoubles
+      again=false;
+      return;
     } else {
 
       //roll dice and move
@@ -292,7 +297,7 @@ class Person {
       println(name+" rolled "+roll1+" and "+roll2);
 
       //otherwise, move roll1+roll2 Squares
-      move(2);//roll1+roll2);
+      move(roll1+roll2);
 
       //handle actions depending on which Square this Person lands on
       String sqName = currentSquare.getName();
@@ -328,6 +333,7 @@ class Person {
   }
 
   void addCard(Card c) {
+    println("the card recieved was: "+c);
     //0 is a chance Card, 1 is communitychest
     if (c.getType()==0) {
       chanceGOOJF=c;
@@ -416,6 +422,12 @@ class Person {
   }
   int getNumRR() {
     return numRR;
+  }
+  int getMoney() {
+    return money;
+  }
+  String getName() {
+   return name; 
   }
   void printSquares() {
     println(squares);
