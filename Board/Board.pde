@@ -16,7 +16,6 @@ class myColor {
   }
 }
 
-//we should put sizes in terms of this variable
 private int len = 550; //should be divisible by 11
 private int fracLen=len/11;
 
@@ -26,7 +25,6 @@ private Textlabel messages;
 private String s="";
 private int time=0;
 private PFont font = createFont("arial", 20);
-private boolean ready=false;//this doesn't do anything yet
 private boolean loaded=false;
 private boolean canRoll=false;
 private int numPlayers;
@@ -83,7 +81,7 @@ public void no(int n) {
   //println("No clicked");
   //cp5.remove("no");
   //cp5.remove("yes");
-  setMessage("ignore the buttons which haven't been removed");
+  setMessage("Please ignore the buttons which haven't been removed.");
   //p.newTurn();
   canRoll=true;
   setMessage("Roll the dice");
@@ -115,8 +113,6 @@ public void enter2(int numP) {
     cp5.remove("enter2");
     cp5.remove("messages");
     fill(150);
-    ready=true;//doesn't do anything (yet?)
-    //players.getCurrent().printSquares();
     canRoll=true;
     setMessage("Roll the dice");
   }
@@ -129,18 +125,9 @@ public void enter(int x) {
   try {
     int numP = Integer.parseInt(s);
     cp5.remove(messages);
-    //what exactly does the above line do?
-    //(I just don't see where messages was ever "added" or something in the first place)
     if (numP>1 && numP<=maxPlayers) {
-      /*
-      messages = cp5.addTextlabel("messages")
-       .setText("Enter players' names")
-       .setPosition(200, 50)
-       .setFont(font)
-       ;
-       */
       setMessage("Enter players' names");
-      cp5.remove("Enter Number of Players (2-4)");//and this?
+      cp5.remove("Enter Number of Players (2-4)");
       numPlayers = numP;
       background(150);
       fill(150);
@@ -155,21 +142,12 @@ public void enter(int x) {
                     ;
       }
       cp5.addBang("enter2")
-        //.setPosition(100,100*(numP+1))
         .setPosition(350, 400) //lazy way to handle the button covering Squares
           .setSize(80, 40)
             .setValue(numP)
               .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
                 ;
     } else {
-      /*
-      messages = cp5.addTextlabel("messages")
-       //.setText("Number of players: "+numP)
-       .setText("Please enter a valid number of players")
-       .setPosition(75, 75)
-       .setFont(font)
-       ;
-       */
       setMessage("Please enter a valid number of players");
     }
   } 
@@ -189,24 +167,11 @@ public void input(String s) {
 }
 
 public void setMessage(String s) {
-  /*
-  cp5.remove("messages");
-   messages = cp5.addTextlabel("messages")
-   .setText(s)
-   .setPosition(75, 75)
-   .setFont(font)
-   ;
-   */
-  /*
-  fill(#0000ff);
-   text(s,len+2*fracLen+30,2*fracLen+30);
-   */
+
   println(s);
   this.s = s;
   fill(#0000FF);
   textFont(font, 16);
-  //stroke(#0000FF);
-
   text(s, len+2*fracLen+30, 2*fracLen+30);
 }
 
@@ -219,6 +184,7 @@ void setup() {
   //////////////////////////////////////////////////
 
   //SETTING UP CONTROLP5
+  
   d1 = new Die(len/2+10, len/2);
   d2 = new Die(len/2-10, len/2);
   //init ControlP5
@@ -240,16 +206,8 @@ void setup() {
         .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
           ;   
 
-  //stuff to be printed out in case the user enters
-  //invalid input, or other stuff the user should know
-  /*
-  messages = cp5.addTextlabel("messages")
-   .setText("")
-   .setPosition(75, 75)
-   .setFont(font)
-   ;
-   */
   setMessage("");
+  
   //////////////////////////////////////////////////
 
   //SETTING UP PLAYING BOARD
@@ -523,16 +481,10 @@ void setup() {
 
   //init 2 LLs of Cards, print rectangles with access to top cards
 
-  //also: to cover passing "GO" and collecting $200, we can have the players "move" with a while loop and, at each Square, check if the current Square is "GO"
-  //and if the player is being sent to jail, we'll set the instance var "inJail" (in the Person class) true *before* he moves
-
   //thanks to whoever answered this: https://answers.yahoo.com/question/index?qid=20110528154141AAFwRyu
 
   //if a card calls for money to be collected or given away, we can use a negative value
-  //println("in setup: "+squares.find(squares.getCurrent().getName()));
-  //println("in setup: "+squares);
-  //println("name"+squares.getCurrent().getName());
-  //Card(int type, String text, int value, boolean outJail, Square move)
+
   Chance.add(new Card(0, "Advance To GO", 0, false, squares.find("GO")));//200?
   Chance.add(new Card(0, "Advance To Illinois Avenue", 0, false, squares.find("Illinois Avenue")));
   Chance.add(new Card(1)); //Advance token to nearest Utility. If unowned, you may buy it from the Bank.  If owned, throw dice and pay owner a total ten times the amount thrown. 
@@ -550,9 +502,9 @@ void setup() {
   Chance.add(new Card(0, "Your building loan matures – collect $150", 150, false, null));
   Chance.add(new Card(0, "You have won a crossword competition - collect $100", 100, false, null));  
 
-  CommunityChest.add(new Card(1, "Advance To GO", 0, false, squares.find("GO")));//200?
-  CommunityChest.add(new Card(1, "Bank error in your favor – collect $75", 75, false, null));
-  CommunityChest.add(new Card(1, "Doctor's fees – Pay $50", -50, false, null));
+//  CommunityChest.add(new Card(1, "Advance To GO", 0, false, squares.find("GO")));//200?
+//  CommunityChest.add(new Card(1, "Bank error in your favor – collect $75", 75, false, null));
+//  CommunityChest.add(new Card(1, "Doctor's fees – Pay $50", -50, false, null));
   CommunityChest.add(new Card(4)); //Get out of jail free – this card may be kept until needed, or sold 
   CommunityChest.add(new Card(1, "Go directly to Jail – do not pass Go, do not collect $200", 0, true, null));
   CommunityChest.add(new Card(1, "It is your birthday. The government has decided to waste debt on you, collect $10 for every player", (numPlayers-1)*10, false, null));
@@ -571,6 +523,7 @@ void setup() {
 }
 
 void draw() {
+  
   lastTime=millis();//not working yet
   background(150);
   for (int i=0; i<squares.getLength (); i++) {
@@ -581,19 +534,16 @@ void draw() {
     players.getCurrent().draw();
     players.forward();
   }
+  
   d1.draw();
   d2.draw();
 
   fill(#0000FF);
   textFont(font, 16);
-  //stroke(#0000FF);
-
   text(s, len+2*fracLen+30, 2*fracLen+30);
-  //messages.draw(this);
 }
 
 void mouseClicked() {
-//  println("Can you roll the dice? "+canRoll);
   if (mouseX<fracLen||mouseX>len-fracLen||mouseY<fracLen||mouseY>len-fracLen) {
     Square cur = squares.getCurrent();
     squares.forward();
@@ -601,18 +551,15 @@ void mouseClicked() {
     while (tmp!=cur) {
       if (tmp.onSquare(mouseX, mouseY)) {
         tmp.mouseClicked();
-        //return;
       }
       squares.forward();
       tmp = squares.getCurrent();
     }
     if (tmp.onSquare(mouseX, mouseY)) {
       tmp.mouseClicked();
-      //return;
     }
   }
   else if (canRoll) {
-    //println("the dice can and should be rolled");
     if (mouseX>d1.leftX()&&mouseY>d1.topY()&&mouseX<d1.rightX()&&mouseY<d1.bottomY()) {
       d1.mouseClicked();
     }

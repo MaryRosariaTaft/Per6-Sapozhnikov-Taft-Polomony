@@ -41,7 +41,6 @@ class Square {
     hasHotel=false;
     owner=null;
     this.img = img;
-    //println("image square");
   }
 
   boolean isRR() {
@@ -63,7 +62,7 @@ class Square {
   int rent(int n){
     int ans=0;
     if(isRR()){
-      ans = 25*Math.pow(2,owner.getNumRR()-1);
+      ans = 25*(int)Math.pow(2,owner.getNumRR()-1);
     } else if(isUtil()){
       //rent is 6 times a random dice roll
       ans = (int)(Math.random()*60)+12;
@@ -71,16 +70,12 @@ class Square {
       switch(n){
         case 0:
           ans = (cost-60)/10+2;
-          //break;
         case 1:
           ans = (cost-60)*5+10;
-          //break;
         case 2:
           ans = (cost-10)*3+30;
-          //break;
         case 3:
           ans = (cost-30)*3+90;
-          //break;
         default:
           ans = cost+rent(1)+rent(n-1);
       }
@@ -108,8 +103,6 @@ class Square {
       fill(c);
       rect(x, y, w, h);
     } else {
-      //hides the black border around the square. 
-      //we need to either change the size of the image by 1 pixel on the top or replace the edges with black
       image(img, x, y);
     }
     if(hasHotel){
@@ -127,38 +120,30 @@ class Square {
   color getColor() {
     return c;
   }
-
   int getCost() {
     return cost;
   }
-
   int getX() {
     return x;
   }
-
   int getY() {
     return y;
   }
-
   int getNumHouses() {
     return numHouses;
   }
   boolean hasHotel() {
     return hasHotel;
   }
-
   String getName() {
     return name;
   }
-
   Person getOwner() {
     return owner;
   }
-
   boolean hasOwner() {
     return owner!=null;
   }
-
   boolean onSquare(int a, int b){
     return a>=x&&a<=x+w&&b>=y&&b<=y+h;
   }
@@ -168,7 +153,6 @@ class Square {
     if(canRoll){
       if(players.getCurrent()==owner && c!=#000000 & c!=#FFFFFF && players.getCurrent().hasAll(this)){
         cp5.addBang("build")
-        //.setPosition(100,100*(numP+1))
         .setPosition(350, 400) //lazy way to handle the button covering Squares
           .setSize(80, 40)
               .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)

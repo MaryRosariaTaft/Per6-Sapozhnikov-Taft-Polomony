@@ -26,10 +26,7 @@ class Die {
     canRoll=false;
     setMessage("");
     println("dice rolled");
-    //println("Can you roll the dice? "+canRoll);
     players.getCurrent().newTurn();
-    //      canRoll=false;
-    //      setMessage("");
   }
 
   void draw() {
@@ -56,11 +53,6 @@ class Die {
       draw6();
       break;
     }
-    
-//    if (roll!=0) {
-//      fill(#0000FF);
-//      text(roll, x+s/2-5, y+s/2+5);
-//    }
   }
 
   void draw1() {

@@ -6,7 +6,7 @@ class Card{
     private int type; //0 is Chest, 1 is CommunityChance
     private String text; //written on the Card
     private int value; //if gain/loss of money is involved
-    private int spec;//see below
+    private int spec;//"special" - see below
     //0 = advance token to nearest utility
     //1 = advance token to nearest RR
     //2 = go back three spaces
@@ -17,8 +17,6 @@ class Card{
     
     private boolean getOutOfJail;
     private Square moveTo;
-    //private boolean nearest, RR;
-    //private boolean goBackThree;
 
     Card(){
 
@@ -31,19 +29,6 @@ class Card{
 	spec=-1;
 	getOutOfJail = outJail;
 	moveTo = move;
-    }
-    
-    Card(int amtGained, String txt){
-        text=txt;
-        
-//        players.getCurrent().addMoney((numPlayers-1)*amtGained);
-//        Person current=players.getCurrent();
-//        players.forward();
-//        Person p=players.getCurrent();
-//        while(p!=current){
-//          p.addMoney(0-amtGained);
-//          players.forward();
-//        }
     }
     
     //use this constructor for special cases:
@@ -133,7 +118,6 @@ class Card{
 	p.addMoney(value);
 	p.moveTo(moveTo);
     }
-  
     //if unowned, can be bought
     //if owned, roll dice and pay owner 10x what you roll
     void nextUtilAct(Person p){
@@ -148,6 +132,7 @@ class Card{
           p.purchase(p.getCurrentSquare());
         }
     }
+    
     //if unowned, can be bought
     //if owned, pay owner 2x rent
     void nextRRAct(Person p){

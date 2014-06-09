@@ -122,19 +122,15 @@ class LL<E> {
   }
 
   E find(String target) {
-    //println("target: "+target);
-    //println("current: "+current);
     if (current==null)
       return null;
     Node<E> tmp = current.getNext();
     while (tmp!=current) {
-      //println("tmp: "+tmp.getData());
       if (tmp.getData().toString().equals(target)) {
         return tmp.getData();
       }
       tmp=tmp.getNext();
     }
-    //println("tmp: "+tmp.getData());
     if (current.getData().toString().equals(target)) {
       return current.getData();
     }
