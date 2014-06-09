@@ -1,8 +1,0 @@
-<html>
-  <head>
-    <title>Polomony</title>
-  </head>
-  <body>
-    <applet code="Board.class" width=550 height=550></applet>
-  </body>
-</html>
