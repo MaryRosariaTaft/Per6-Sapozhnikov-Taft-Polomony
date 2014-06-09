@@ -255,7 +255,7 @@ class Person {
 
 
   void turn() {
-    println(name+"has "+chestGOOJF);
+
     //game terminates when one person goes bankrupt
 
     if (money<=0) {
